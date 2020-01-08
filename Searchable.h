@@ -13,7 +13,7 @@ class Searchable {
 public:
     virtual State<T>* getInitialState();
     virtual State<T>* getGoalState();
-    virtual vector<State<T>*> getAllPossibleStates(State<T> s);
+    virtual vector<State<T>*> getAllPossibleStates(State<T>* s);
     virtual ~Searchable() = default;
 
 };

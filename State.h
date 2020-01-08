@@ -18,5 +18,14 @@ public:
         //we used == but it should be Equals
         return this->state == s->state;
     }
+    double getTrailCost() {
+        return trail_cost;
+    }
+    double getCost() {
+        return cost;
+    }
+    void setComeFrom(State<T>* s) {
+        come_from = s;
+    }
 };
 #endif //EX4_STATE_H

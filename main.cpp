@@ -1,5 +1,7 @@
 #include <iostream>
 #include "StringReverser.h"
+#include "Searchable.h"
+#include "BestFirstSearch.h"
 namespace boot {
     class Main {
     public:
@@ -7,9 +9,8 @@ namespace boot {
     };
 }
 int main(int argc, char* argv[]) {
-  std::cout << "Hello Nili" << std::endl;
-  StringReverser* stringReverser = new StringReverser();
-  cout<<stringReverser->solve("shiraz")<<endl;
-  cout<<stringReverser->solve("nerya")<<endl;
+  Searcher<string, string>* searcher(new BestFirstSearch<string>);
+  Searchable<string>* searchable;
+  searcher->search(searchable);
   return 0;
 }

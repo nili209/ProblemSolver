@@ -6,13 +6,13 @@
 #define EX4_MYSEARCHER_H
 
 #include "Searcher.h"
-template <class Solution, typename T>
-class MySearcher : public Searcher<Solution, T> {
-    virtual Solution search(Searchable<T>* searchable);
+template <class string, typename T>
+class MySearcher : public Searcher<string, T> {
+    virtual string search(Searchable<T>* searchable);
     int getNumberOfNodesEvaluated() {
         return 0;
     }
-    virtual ~MySearcher() = default;
+    virtual ~MySearcher();
 
 };
 #endif //EX4_MYSEARCHER_H
