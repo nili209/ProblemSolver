@@ -10,12 +10,6 @@
 
 class StringReverser : public Solver<string, string> {
 public:
-    virtual string solve(string problem) {
-        int n = problem.length();
-        for (int i = 0; i < n / 2; i++) {
-            swap(problem[i], problem[n - i - 1]);
-        }
-        return problem;
-    }
+    virtual string solve(string problem);
 };
 #endif //EX4_STRINGREVERSER_H

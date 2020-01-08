@@ -11,8 +11,8 @@
 template <class Problem, class Solution>
 class MyTestClientHandler : public ClientHandler {
 private:
-    Solver<Problem, Solution> solver;
-    CacheManager cache_manager;
+    Solver<Problem, Solution>* solver;
+    CacheManager* cache_manager;
 public:
     virtual void handleClient(istream input_stream, ostream output_stream) {
 
@@ -20,6 +20,10 @@ public:
     Solution myTestClientHandler(istream istream) {
         Solution solution;
         return solution;
+    }
+    virtual ~MyTestClientHandler() {
+        delete solver;
+        delete cache_manager;
     }
 };
 
