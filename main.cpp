@@ -10,5 +10,6 @@ int main(int argc, char* argv[]) {
   std::cout << "Hello Nili" << std::endl;
   StringReverser* stringReverser = new StringReverser();
   cout<<stringReverser->solve("shiraz")<<endl;
+  cout<<stringReverser->solve("nerya")<<endl;
   return 0;
 }
