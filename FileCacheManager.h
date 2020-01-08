@@ -1,5 +1,5 @@
 //
-// Created by nili on 1/8/20.
+// Created by nili and shiraz on 1/8/20.
 //
 
 #ifndef EX4_FILECACHEMANAGER_H
@@ -21,6 +21,7 @@ public:
         Solution solution;
         return solution;
     }
+    virtual ~FileCacheManager() = default;
 };
 
 

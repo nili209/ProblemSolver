@@ -1,5 +1,5 @@
 //
-// Created by nili on 1/8/20.
+// Created by nili and shiraz on 1/8/20.
 //
 
 #ifndef EX4_MYCLIENTHANDLER_H
@@ -10,6 +10,7 @@
 class MyClientHandler : public ClientHandler {
 public:
     virtual void handleClient(istream input_stream, ostream output_stream);
+    virtual ~MyClientHandler() = default;
 
 };
 

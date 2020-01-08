@@ -1,5 +1,5 @@
 //
-// Created by nili on 1/8/20.
+// Created by nili and shiraz on 1/8/20.
 //
 
 #ifndef EX4_CACHEMANAGER_H
@@ -15,6 +15,7 @@ public:
     void saveSolution(Solution solution);
     template<typename Solution, typename Problem>
     Solution getSolution(Problem problem);
+    virtual ~CacheManager() = default;
 
 };
 #endif //EX4_CACHEMANAGER_H
