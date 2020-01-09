@@ -16,22 +16,19 @@ using namespace std;
 #include <cstdlib>
 using namespace std;
 
-template <typename T>
+template <typename Solution, typename Problem>
 class CacheManager {
  private:
-  virtual void search_key_in_file(string &file_name_s, T& obj) = 0;
-  virtual void insert(string key, T obj) = 0;
-  virtual void write_to_file(string key, T& obj) = 0;
-  virtual T get(string key) = 0;
-  void use_update(typename unordered_map<string, pair<T, list<string>::iterator>>::iterator &it);
+  virtual void search_key_in_file(string &file_name_s, Solution& obj) = 0;
+  virtual void insert(string key, Solution obj) = 0;
+  virtual void write_to_file(string key, Solution& obj) = 0;
+  virtual Solution get(string key) = 0;
+  void use_update(typename unordered_map<string, pair<Solution, list<string>::iterator>>::iterator &it);
   template<typename Printer>
   void foreach(Printer pFunction);
  public:
-    template<typename Problem>
     bool isSolved(Problem problem);
-    template<typename Solution, typename Problem>
     void saveSolution(Solution solution, Problem problem);
-    template<typename Solution, typename Problem>
     Solution getSolution(Problem problem);
     virtual ~CacheManager() = default;
 };

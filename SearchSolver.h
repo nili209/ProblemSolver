@@ -8,12 +8,12 @@
 #include "Solver.h"
 #include "Searcher.h"
 template <class Problem, class Solution>
-class SearchSolver : public Solver<Problem, Solution> {
+class SearchSolver : public Solver<Searchable<Point>*, string> {
 private:
-    Searcher<Solution, Problem>* my_searcher;
+    Searcher<string, Point>* my_searcher;
 public:
-    SearchSolver(Searcher<Solution, Problem>* searcher) : my_searcher(searcher) {}
-    virtual Solution solve(Problem problem) {
+    SearchSolver(Searcher<string, Point>* searcher) : my_searcher(searcher) {}
+    virtual string solve(Searchable<Point>* problem) {
         return my_searcher->search(problem);
     }
     virtual ~SearchSolver() {

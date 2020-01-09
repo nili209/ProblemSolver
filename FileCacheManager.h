@@ -6,7 +6,7 @@
 #define EX4_FILECACHEMANAGER_H
 
 #include "CacheManager.h"
-class FileCacheManager : public CacheManager<string> {
+class FileCacheManager : public CacheManager<string, string> {
  private:
   int capacity;
   // <key, <value, key iterator>>

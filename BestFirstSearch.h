@@ -27,14 +27,14 @@ class BestFirstSearch : public MySearcher<string, T> {
     }
     string direction = state->getDirection();
     solution.insert(0, direction);
-    MySearcher<string, Point>::number_of_nodes_evaluated++;
+    this->number_of_nodes_evaluated++;
     if (!state->Equals(goal)) {
       solution.insert(direction.length(), ", ");
     }
     return backTrace(state->getComeFrom(), init, goal);
   }
  public:
-  virtual string search(Searchable<T> *searchable) {
+  string search(Searchable<T> *searchable) {
     addToOpenPriorityQueue(searchable->getInitialState());
     while (!open_priority_queue.empty()) {
       State<T>* current = popOpenPriorityQueue();

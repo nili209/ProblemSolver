@@ -4,6 +4,7 @@
 #include "BestFirstSearch.h"
 #include "Matrix.h"
 #include "CacheManager.h"
+#include "SearchSolver.h"
 namespace boot {
     class Main {
     public:

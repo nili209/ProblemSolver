@@ -11,7 +11,7 @@ void MyClientHandler::handleClient(istream input_stream, ostream output_stream) 
   if (cache_manager.isSolved(problem)) {
     solution = cache_manager.getSolution(problem).c_str();
   } else {
-    solution = search_solver.solve(problem).c_str();
+    solution = search_solver->solve(matrix).c_str();
     cache_manager.saveSolution(solution, problem);
   }
   //does the length of solution is sizeof(solution)
