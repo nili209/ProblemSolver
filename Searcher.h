@@ -4,16 +4,14 @@
 
 #ifndef EX4_SEARCHER_H
 #define EX4_SEARCHER_H
-#define UP "Up"
-#define DOWN "Down"
-#define RIGHT "Right"
-#define LEFT "Left"
+
 #include "Searchable.h"
 template <class Solution,typename T>
 class Searcher {
 public:
-    virtual Solution search(Searchable<T>* searchable);
-    virtual int getNumberOfNodesEvaluated();
+    Searcher<Solution, T>(){}
+    virtual Solution search(Searchable<T>* searchable) = 0;
+    virtual int getNumberOfNodesEvaluated() = 0;
     virtual ~Searcher() = default;
 };
 

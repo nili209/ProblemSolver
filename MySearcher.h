@@ -8,11 +8,11 @@
 #include "Searcher.h"
 template <class string, typename T>
 class MySearcher : public Searcher<string, T> {
-    virtual string search(Searchable<T>* searchable);
+ public:
+    virtual string search(Searchable<T>* searchable) = 0;
     int getNumberOfNodesEvaluated() {
         return 0;
     }
-    virtual ~MySearcher();
-
+    virtual ~MySearcher() = default;
 };
 #endif //EX4_MYSEARCHER_H

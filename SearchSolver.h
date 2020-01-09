@@ -10,9 +10,9 @@
 template <class Problem, class Solution>
 class SearchSolver : public Solver<Problem, Solution> {
 private:
-    Searcher<Solution>* my_searcher;
+    Searcher<Solution, Problem>* my_searcher;
 public:
-    SearchSolver(Searcher<Solution>* searcher) : my_searcher(searcher) {}
+    SearchSolver(Searcher<Solution, Problem>* searcher) : my_searcher(searcher) {}
     virtual Solution solve(Problem problem) {
         return my_searcher->search(problem);
     }

@@ -11,5 +11,6 @@
 class StringReverser : public Solver<string, string> {
 public:
     virtual string solve(string problem);
+    virtual ~StringReverser() = default;
 };
 #endif //EX4_STRINGREVERSER_H
