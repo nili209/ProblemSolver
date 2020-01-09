@@ -25,8 +25,8 @@ class MySearchable : public Searchable<T> {
   }
   virtual vector<State<T>*> getAllPossibleStates(State<T>* s){}
   virtual ~MySearchable() {
-    //delete initial_state;
-    //delete goal_state;
+    delete initial_state;
+    delete goal_state;
   }
 };
 #endif //EX4__MYSEARCHABLE_H_

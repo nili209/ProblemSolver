@@ -9,11 +9,16 @@
 #include <queue>
 #include <vector>
 #include "MySearcher.h"
-#include "MyComperator.h"
 template<typename T>
 class BestFirstSearch : public MySearcher<string, T> {
+  class MyComperator {
+   public:
+    bool operator()(State<T>* left, State<T>* right) {
+      return (left->getTrailCost()) > (right->getTrailCost());
+    }
+  };
  private:
-  priority_queue<State<T>*> open_priority_queue;
+  priority_queue<State<T>*, vector<State<T>*>, MyComperator> open_priority_queue;
   vector<State<T>*> closed;
   string solution;
   string backTrace(State<T>* state, State<T>* init, State<T>* goal) {
@@ -31,30 +36,40 @@ class BestFirstSearch : public MySearcher<string, T> {
   virtual string search(Searchable<T> *searchable) {
     addToOpenPriorityQueue(searchable->getInitialState());
     while (!open_priority_queue.empty()) {
-      State<T>* n = popOpenPriorityQueue();
-      closed.push_back(n);
-      State<Point>* goal_state = searchable->getGoalState();
-      if (n->Equals(goal_state)) {
-        return backTrace(n, searchable->getInitialState(), searchable->getGoalState());
+      State<T>* current = popOpenPriorityQueue();
+      closed.push_back(current);
+      if (current->Equals(searchable->getGoalState())) {
+        return backTrace(current, searchable->getInitialState(), searchable->getGoalState());
       }
-      vector<State<T>*> succerssors = searchable->getAllPossibleStates(n);
-      for( State<T>* s : succerssors) {
-        if (!isClosedContain(s) && !isOpenContain(s)) {
-           s->setComeFrom(n);
-          addToOpenPriorityQueue(s);
+      vector<State<T>*> neighbors = searchable->getAllPossibleStates(current);
+      for(State<T>* neighbor : neighbors) {
+        if (!isClosedContain(neighbor) && !isOpenContain(neighbor)) {
+          neighbor->setComeFrom(current);
+          addToOpenPriorityQueue(neighbor);
         } else {
-          double prev_trial = s->getTrailCost();
-          double curr_trial = n->getTrailCost() + s->getCost();
+          double prev_trial = neighbor->getTrailCost();
+          double curr_trial = current->getTrailCost() + neighbor->getCost();
           if (curr_trial < prev_trial) {
-            if (!isOpenContain(s)) {
-              addToOpenPriorityQueue(s);
+            if (!isOpenContain(neighbor)) {
+              addToOpenPriorityQueue(neighbor);
             } else {
-             // open_priority_queue.emplace(s);
+              neighbor->setTrailCost(curr_trial);
+              neighbor->setComeFrom(current);
+              open_priority_queue = updatePriorityQ(open_priority_queue);
             }
           }
         }
       }
     }
+  }
+  priority_queue<State<T>*, vector<State<T> *>, MyComperator> updatePriorityQ(priority_queue<State<T> *,
+      vector<State<T> *>, MyComperator> prev_priority_queue){
+    priority_queue<State<T> *, vector<State<T> *>, MyComperator> newQ;
+    while (!prev_priority_queue.empty()) {
+      newQ.push(prev_priority_queue.top());
+      prev_priority_queue.pop();
+    }
+    return newQ;
   }
   void addToOpenPriorityQueue(State<T> *s) {
     open_priority_queue.push(s);
@@ -73,7 +88,7 @@ class BestFirstSearch : public MySearcher<string, T> {
     return false;
   }
   bool isOpenContain(State<T> *state1) {
-    priority_queue<State<T>*> temp = open_priority_queue;
+    priority_queue<State<T>*, vector<State<T>*>, MyComperator> temp = open_priority_queue;
     while (!temp.empty()) {
         State<T>* state2 = temp.top();
         if (state1->Equals(state2)) {

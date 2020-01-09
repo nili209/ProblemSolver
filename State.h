@@ -27,6 +27,9 @@ class State {
   double getTrailCost() const {
     return trail_cost;
   }
+  void setTrailCost(double new_cost) {
+    trail_cost = new_cost;
+  }
   double getCost() {
     return cost;
   }
@@ -40,9 +43,12 @@ class State {
   T getState() {
     return state;
   }
-  bool operator<(const State<Point>*& state) const {
-    return (trail_cost < state->getTrailCost());
-  }
+//  bool operator<(const State<Point>*& state) const {
+//    return (trail_cost > state->getTrailCost());
+//  }
+//  bool operator>(const State<Point>*& state) const {
+//    return (trail_cost < state->getTrailCost());
+//  }
   string getDirection() {
     Point parent = come_from->getState();
     if (parent.isNeighbor(state)) {
