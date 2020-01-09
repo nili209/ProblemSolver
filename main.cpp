@@ -5,6 +5,7 @@
 #include "Matrix.h"
 #include "CacheManager.h"
 #include "SearchSolver.h"
+#include "FileCacheManager.h"
 namespace boot {
     class Main {
     public:
@@ -31,7 +32,7 @@ int main(int argc, char* argv[]) {
   State<Point>* state2 = new State<Point>(*p01, 4);
   State<Point>* state3 = new State<Point>(*p10, 7);
   State<Point>* state4 = new State<Point>(*p11, 1);
-  State<Point>* state5 = new State<Point>(*p20, -10);
+  State<Point>* state5 = new State<Point>(*p20, 0);
   State<Point>* goal_state4 = new State<Point>(*goal_point, 10);
   structure.push_back(initial_state1);
   structure.push_back(state2);
@@ -95,5 +96,28 @@ int main(int argc, char* argv[]) {
   Searchable<Point>* matrix3  = new Matrix(initial_state1, goal_state4, structure3);
   string s2 = searcher3->search(matrix3);
   std::cout<<"test3: "<< s2<<endl<<"number of nodes = " << searcher3->getNumberOfNodesEvaluated()<<endl;
+  string problem1 = "1,2;3,4;0;0;1;1";
+  string problem2 = "1,4;7,1;0,10;0;0;2;1";
+  string problem3 = "1,8,10;9,1000,8;10,0,2;0;0;2;2";
+  FileCacheManager my_cache;
+  cout<<my_cache.isSolved(problem1)<<endl;
+  my_cache.saveSolution(s1,problem1);
+  cout<<my_cache.isSolved(problem1)<<endl;
+  cout<<my_cache.getSolution(problem1)<<endl;
+  /****
+   *
+   */
+  cout<<my_cache.isSolved(problem2)<<endl;
+  my_cache.saveSolution(s,problem2);
+  cout<<my_cache.isSolved(problem2)<<endl;
+  cout<<my_cache.getSolution(problem2)<<endl;
+  cout<<my_cache.isSolved(problem2)<<endl;
+  /****
+   *
+   */
+  cout<<my_cache.isSolved(problem3)<<endl;
+  my_cache.saveSolution(s2,problem3);
+  cout<<my_cache.isSolved(problem3)<<endl;
+  cout<<my_cache.getSolution(problem3)<<endl;
   return 0;
 }

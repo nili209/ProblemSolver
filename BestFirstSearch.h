@@ -27,7 +27,6 @@ class BestFirstSearch : public MySearcher<string, T> {
     }
     string direction = state->getDirection();
     solution.insert(0, direction);
-    this->number_of_nodes_evaluated++;
     if (!state->Equals(goal)) {
       solution.insert(direction.length(), ", ");
     }
@@ -45,6 +44,7 @@ class BestFirstSearch : public MySearcher<string, T> {
       vector<State<T>*> neighbors = searchable->getAllPossibleStates(current);
       for(State<T>* neighbor : neighbors) {
         if (!isClosedContain(neighbor) && !isOpenContain(neighbor)) {
+          this->number_of_nodes_evaluated++;
           neighbor->setComeFrom(current);
           addToOpenPriorityQueue(neighbor);
         } else {

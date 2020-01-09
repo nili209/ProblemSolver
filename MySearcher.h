@@ -9,7 +9,7 @@
 template <class string, typename Problem>
 class MySearcher : public Searcher<string, Problem> {
  protected:
-  int number_of_nodes_evaluated = 0;
+  int number_of_nodes_evaluated = 1;
  public:
     virtual string search(Searchable<Point>* searchable) = 0;
     int getNumberOfNodesEvaluated() {

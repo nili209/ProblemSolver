@@ -98,21 +98,19 @@ class FileCacheManager : public CacheManager<string, string> {
     }
   }
  public:
-  FileCacheManager() : capacity(0) {}
+  FileCacheManager() : capacity(-1) {}
   bool isSolved(string problem) {
     string key = problem + ".txt";
-    auto item = file_name_map.find(problem);
+    auto item = file_name_map.find(key);
     if (item == file_name_map.end()) {
       return false;
     }
     return true;
   }
   void saveSolution(string solution, string problem) {
-    //string key = problem;
     insert(problem, solution);
   }
   string getSolution(string problem) {
-    //string key = problem;
     return get(problem);
   }
   virtual ~FileCacheManager() = default;

@@ -31,6 +31,7 @@ void MyClientHandler::initProblem(istream &input_stream) {
     counter_of_lines++;
     line = "";
     problem += line;
+    problem += ';';
   }
   //reading the word end
   while (current_char != '\n') {
@@ -63,6 +64,7 @@ void MyClientHandler::initProblem(istream &input_stream) {
       }
     }
     counter_of_last_values++;
+    problem += ';';
   }
   createMatrix(stoi(row_in), stoi(col_in), stoi(row_out), stoi(col_out));
 }
