@@ -20,8 +20,7 @@ class State {
   State<Point> *come_from;
  public:
   State<T>(T state1, double cost1) : state(state1), cost(cost1), trail_cost(cost1), come_from(nullptr) {}
-  bool Equals(State<Point>* s) {
-    //we used == but it should be Equals
+  bool Equals(State<T>* s) {
     return state == s->state;
   }
   double getTrailCost() const {
@@ -43,12 +42,6 @@ class State {
   T getState() {
     return state;
   }
-//  bool operator<(const State<Point>*& state) const {
-//    return (trail_cost > state->getTrailCost());
-//  }
-//  bool operator>(const State<Point>*& state) const {
-//    return (trail_cost < state->getTrailCost());
-//  }
   string getDirection() {
     Point parent = come_from->getState();
     if (parent.isNeighbor(state)) {

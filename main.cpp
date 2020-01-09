@@ -3,6 +3,7 @@
 #include "Searchable.h"
 #include "BestFirstSearch.h"
 #include "Matrix.h"
+#include "CacheManager.h"
 namespace boot {
     class Main {
     public:
@@ -39,7 +40,7 @@ int main(int argc, char* argv[]) {
   structure.push_back(goal_state4);
   Searchable<Point>* matrix = new Matrix(initial_state1, goal_state4, structure);
   string s = searcher->search(matrix);
-  std::cout<<"test1: "<<s<<endl;
+  std::cout<<"test1: "<<s<<endl<<"number of nodes = " << searcher->getNumberOfNodesEvaluated()<<endl;
   //test2
   Searcher<string, Point>* searcher2(new BestFirstSearch<Point>);
   initial_point = new Point(0,0);
@@ -59,7 +60,7 @@ int main(int argc, char* argv[]) {
   structure2.push_back(goal_state4);
   Searchable<Point>* matrix2  = new Matrix(initial_state1, goal_state4, structure2);
   string s1 = searcher2->search(matrix2);
-  std::cout<<"test2: "<< s1<<endl;
+  std::cout<<"test2: "<< s1<<endl<<"number of nodes = " << searcher2->getNumberOfNodesEvaluated()<<endl;
   //test3
   Searcher<string, Point>* searcher3(new BestFirstSearch<Point>);
   initial_point = new Point(0,0);
@@ -92,7 +93,6 @@ int main(int argc, char* argv[]) {
   structure3.push_back(goal_state4);
   Searchable<Point>* matrix3  = new Matrix(initial_state1, goal_state4, structure3);
   string s2 = searcher3->search(matrix3);
-  std::cout<<"test3: "<< s2<<endl;
-
+  std::cout<<"test3: "<< s2<<endl<<"number of nodes = " << searcher3->getNumberOfNodesEvaluated()<<endl;
   return 0;
 }

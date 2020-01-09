@@ -3,9 +3,6 @@
 //
 
 #include "Point.h"
-Point* Point::getPoint() {
-  return this;
-}
 int Point::getX() {
   return this->x;
 }

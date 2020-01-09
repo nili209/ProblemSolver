@@ -27,6 +27,7 @@ class BestFirstSearch : public MySearcher<string, T> {
     }
     string direction = state->getDirection();
     solution.insert(0, direction);
+    MySearcher<string, Point>::number_of_nodes_evaluated++;
     if (!state->Equals(goal)) {
       solution.insert(direction.length(), ", ");
     }

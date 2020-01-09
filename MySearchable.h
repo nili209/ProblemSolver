@@ -20,9 +20,6 @@ class MySearchable : public Searchable<T> {
   State<T>* getGoalState() {
     return goal_state;
   }
-  vector<State<T>*> getStructure() {
-    return structure;
-  }
   virtual vector<State<T>*> getAllPossibleStates(State<T>* s){}
   virtual ~MySearchable() {
     delete initial_state;
