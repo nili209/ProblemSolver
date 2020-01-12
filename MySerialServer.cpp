@@ -6,10 +6,10 @@
 #include <mutex>
 #include <condition_variable>
 #include "MySerialServer.h"
-
+#define TIME_OUT 60
+static int socketfd;
 void MySerialServer::start(int port, ClientHandler *client_handler) {
   //open socket
-  int socketfd;
   sockaddr_in address;
   socketfd = socket(AF_INET, SOCK_STREAM, 0);
   if (socketfd == -1) {
@@ -25,7 +25,6 @@ void MySerialServer::start(int port, ClientHandler *client_handler) {
   }
   //while loop accepting and handeling clients serialy.
   dealWithClients(client_handler, socketfd, address);
-  close(socketfd);
 }
 void MySerialServer::dealWithClients(ClientHandler *client_handler, int socketfd, sockaddr_in &address) {
   while (true) {
@@ -36,23 +35,41 @@ void MySerialServer::dealWithClients(ClientHandler *client_handler, int socketfd
       cout << "Server is now listening..." << endl;
     }
     cout << "nili" << endl;
+    struct timeval tv;
+    setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
     int client_socket_in = accept(socketfd, (struct sockaddr *) &address,
                                   (socklen_t *) &address);
-    if (client_socket_in == -1) {
-      cerr << "Error accepting client" << endl;
-      exit(1);
+    fd_set rfds;
+    tv.tv_usec = 0.0;
+    FD_ZERO(&rfds);
+    FD_SET(client_socket_in, &rfds);
+    int recVal = 0;
+    tv.tv_sec = TIME_OUT;
+    recVal = select(client_socket_in + 1, &rfds, NULL, NULL, &tv);
+    switch (recVal) {
+      //timeout
+      case (0): {
+        cout << "time_out" << endl;
+        return;
+      }//error
+      case (-1): {
+        cerr << "Error accepting client" << endl;
+        exit(1);
+      }default: {
+        break;
+      }
     }
     cout << "shiraz" << endl;
     client_handler->handleClient(client_socket_in, client_socket_in);
     close(client_socket_in);
-    //timeout
-    return;
   }
 }
 void MySerialServer::open(int port, ClientHandler *client_handler) {
   thread thread_1(start, port, client_handler);
   thread_1.join();
+  stop();
 }
-void MySerialServer::stop(int socketfd) {
-
+void MySerialServer::stop() {
+  cout<<"closing the server socket"<<endl;
+  close(socketfd);
 }

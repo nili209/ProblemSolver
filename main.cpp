@@ -14,7 +14,7 @@ using namespace std;
 namespace boot {
 class Main {
  public:
-  int main(int argc) {
+  int main(int port) {
       Searcher<Searchable<Point>*, string>* searcher(new BestFirstSearch<Point>);
   Point * initial_point = new Point(0,0);
   Point * p01 = new Point(0,1);
@@ -123,14 +123,15 @@ class Main {
     server_side::Server *server = new MySerialServer();
     Solver<string, const char*> *string_reverser = new StringReverser();
     ClientHandler *c = new MyTestClientHandler<string, const char*>(string_reverser, my_cache2);
-    server->open(5400, c);
+    server->open(port, c);
 
   }
 };
 }
 int main(int argc, char* argv[]) {
  boot::Main main;
- main.main(5400);
+ cout<<atoi(argv[1])<<endl;
+ main.main(atoi(argv[1]));
  return 0;
 }
 //  Searcher<string, Searchable<Point>*>* searcher(new BestFirstSearch<Point>);

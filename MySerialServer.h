@@ -16,7 +16,7 @@ using namespace server_side;
 class MySerialServer : public Server {
  public:
   virtual void open(int port, ClientHandler *client_handler);
-  virtual void stop(int socketfd);
+  virtual void stop();
   static void start(int port, ClientHandler *client_handler);
   virtual ~MySerialServer() = default;
 
