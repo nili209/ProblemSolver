@@ -17,10 +17,10 @@ template<class Problem, class Solution>
 class MyTestClientHandler : public ClientHandler {
  private:
   Solver<Problem, Solution> *solver;
-  //CacheManager<Problem, Solution> *cache_manager;
-  FileCacheManager<Solution>* cache_manager;
+  CacheManager<Problem, Solution> *cache_manager;
+  //FileCacheManager<Solution>* cache_manager;
  public:
-  MyTestClientHandler(Solver<Problem, Solution> *solver1, FileCacheManager<Solution> *cache_manager1) :
+  MyTestClientHandler(Solver<Problem, Solution> *solver1, CacheManager<string, Solution>* cache_manager1) :
       solver(solver1), cache_manager(cache_manager1) {}
   virtual void handleClient(int client_socket_in, int client_socket_out) {
     myTestClientHandler(client_socket_in);

@@ -9,9 +9,9 @@
 #include <queue>
 #include <vector>
 #include "MySearcher.h"
-template<typename T>
-//love
-class BestFirstSearch : public MySearcher<Searchable<T>*, string, T> {
+template<typename T, typename Solution>
+//T = Point
+class BestFirstSearch : public MySearcher<T, Solution> {
   class MyComperator {
    public:
     bool operator()(State<T>* left, State<T>* right) {

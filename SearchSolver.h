@@ -7,15 +7,15 @@
 
 #include "Solver.h"
 #include "Searcher.h"
-//problem = searcable
-template<class Problem, class Solution>
+//T = Point
+template<typename T, class Solution>
 class SearchSolver : public Solver<string, Solution> {
  private:
   Searchable<Point> *matrix;
   vector<State<Point> *> structure;
-  Searcher<Problem, Solution> *my_searcher;
+  Searcher<Searchable<T>*, Solution> *my_searcher;
  public:
-  SearchSolver(Searcher<Solution, Problem> *searcher) : my_searcher(searcher) {}
+  SearchSolver(Searcher<T, Solution> *searcher) : my_searcher(searcher) {}
   /**
    * Given a problem, the function creates a Searchable of type matrix.
    */

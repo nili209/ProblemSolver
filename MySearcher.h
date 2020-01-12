@@ -6,9 +6,9 @@
 #define EX4_MYSEARCHER_H
 
 #include "Searcher.h"
-//love
-template <class Problem, typename Solution, typename T>
-class MySearcher : public Searcher<Problem, Solution> {
+// T = Point
+template <typename T, typename Solution>
+class MySearcher : public Searcher<T, Solution> {
  private:
   int number_of_nodes_evaluated = 1;
   string solution;
@@ -33,8 +33,7 @@ class MySearcher : public Searcher<Problem, Solution> {
     return backTrace(state->getComeFrom(), init, goal);
   }
  public:
-  //love
-    virtual Solution search(Problem searchable) = 0;
+    virtual Solution search(Searchable<T>* searchable) = 0;
     int getNumberOfNodesEvaluated() {
         return number_of_nodes_evaluated;
     }

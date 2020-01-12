@@ -8,9 +8,9 @@
 #include "Solver.h"
 #include <string>
 
-class StringReverser : public Solver<string, const char*> {
+class StringReverser : public Solver<string, string> {
 public:
-    virtual const char* solve(string problem);
+    virtual string solve(string problem);
     virtual ~StringReverser() = default;
 };
 #endif //EX4_STRINGREVERSER_H

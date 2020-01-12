@@ -18,9 +18,9 @@ using namespace std;
 template <typename Problem, typename Solution>
 class CacheManager {
  public:
-    bool isSolved(Problem problem);
-    void saveSolution(Solution solution, Problem problem);
-    Solution getSolution(Problem problem);
+    virtual bool isSolved(Problem problem) = 0;
+    virtual void saveSolution(Solution solution, Problem problem) = 0;
+    virtual Solution getSolution(Problem problem) = 0;
     virtual ~CacheManager() = default;
 };
 #endif //EX4_CACHEMANAGER_H

@@ -21,7 +21,6 @@ class MyClientHandler : public ClientHandler {
   //can be searchsolver?
   Solver<Problem, Solution> *solver;
  public:
-  //love
   MyClientHandler(Solver<Problem, const char*> *solver1, CacheManager<Solution, Problem>* cache_menager1) : solver(solver1),
   cache_manager(cache_menager1){}
   virtual void handleClient(int client_socket_in, int client_socket_out) {

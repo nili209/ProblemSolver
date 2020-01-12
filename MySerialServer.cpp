@@ -6,7 +6,7 @@
 #include <mutex>
 #include <condition_variable>
 #include "MySerialServer.h"
-#define TIME_OUT 60
+#define TIME_OUT 2
 static int socketfd;
 void MySerialServer::start(int port, ClientHandler *client_handler) {
   //open socket

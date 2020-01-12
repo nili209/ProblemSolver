@@ -6,11 +6,11 @@
 #define EX4_SEARCHER_H
 
 #include "Searchable.h"
-template <class Problem,class Solution>
+template <typename T,class Solution>
 class Searcher {
 public:
-    Searcher<Problem, Solution>(){}
-    virtual Solution search(Problem searchable) = 0;
+    Searcher<T, Solution>(){}
+    virtual Solution search(Searchable<T>* searchable) = 0;
     virtual int getNumberOfNodesEvaluated() = 0;
     virtual ~Searcher() = default;
 };
