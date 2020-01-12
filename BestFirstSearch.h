@@ -74,6 +74,7 @@ class BestFirstSearch : public MySearcher<Searchable<T>*, string, T> {
     }
     return newQ;
   }
+
   /**
    * Given a State, the function add it to open priotiy queue
    */
