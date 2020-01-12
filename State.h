@@ -14,10 +14,10 @@ using namespace std;
 template<typename T>
 class State {
  private:
-  Point state;
+  T state;
   double cost;
   double trail_cost;
-  State<Point> *come_from;
+  State<T> *come_from;
  public:
   /**
    * Constructor.
@@ -50,7 +50,7 @@ class State {
   /**
    * Given a State, the function udpates come_from and trail_cost.
    */
-  void setComeFrom(State<Point> *s) {
+  void setComeFrom(State<T> *s) {
     come_from = s;
     trail_cost += s->getTrailCost();
   }
