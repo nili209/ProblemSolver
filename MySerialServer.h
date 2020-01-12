@@ -6,15 +6,21 @@
 #define EX4_MYSERIALSERVER_H
 
 #include "Server.h"
+#include <sys/socket.h>
+#include <thread>
+#include <netinet/in.h>
+#include <iostream>
+
 using namespace server_side;
+
 class MySerialServer : public Server {
-public:
-    virtual void open(int port, ClientHandler* client_handler);
-    virtual void stop();
-    void start(int port);
-    virtual ~MySerialServer() = default;
+ public:
+  virtual void open(int port, ClientHandler *client_handler);
+  virtual void stop(int socketfd);
+  static void start(int port, ClientHandler *client_handler);
+  virtual ~MySerialServer() = default;
 
+  static void dealWithClients(ClientHandler *client_handler, int socketfd, sockaddr_in &address);
 };
-
 
 #endif //EX4_MYSERIALSERVER_H

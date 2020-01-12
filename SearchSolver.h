@@ -7,20 +7,32 @@
 
 #include "Solver.h"
 #include "Searcher.h"
-template <class Problem, class Solution>
-class SearchSolver : public Solver<Problem, Solution> {
-private:
-    Searcher<Solution, Problem>* my_searcher;
-public:
-    SearchSolver(Searcher<Solution, Problem>* searcher) : my_searcher(searcher) {}
-    virtual Solution solve(Problem problem) {
-        return my_searcher->search(problem);
-    }
-    virtual ~SearchSolver() {
-        delete my_searcher;
-    }
+//problem = searcable
+template<class Problem, class Solution>
+class SearchSolver : public Solver<string, Solution> {
+ private:
+  Searchable<Point> *matrix;
+  vector<State<Point> *> structure;
+  Searcher<Problem, Solution> *my_searcher;
+ public:
+  SearchSolver(Searcher<Solution, Problem> *searcher) : my_searcher(searcher) {}
+  /**
+   * Given a problem, the function creates a Searchable of type matrix.
+   */
+  void initMatrix(string problem) {
+
+  }
+  virtual Solution solve(string problem) {
+    initMatrix(problem);
+    return my_searcher->search(matrix);
+  }
+  /**
+ * Destructor.
+ */
+  virtual ~SearchSolver() {
+    delete my_searcher;
+  }
 
 };
-
 
 #endif //EX4_SEARCHSOLVER_H

@@ -11,7 +11,7 @@
 #include "MySearcher.h"
 template<typename T>
 //love
-class BestFirstSearch : public MySearcher<string, Searchable<T>*, T> {
+class BestFirstSearch : public MySearcher<Searchable<T>*, string, T> {
   class MyComperator {
    public:
     bool operator()(State<T>* left, State<T>* right) {

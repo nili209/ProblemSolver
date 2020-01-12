@@ -14,9 +14,8 @@ using namespace std;
 #include <algorithm>
 #include <fstream>
 #include <cstdlib>
-using namespace std;
 
-template <typename Solution, typename Problem>
+template <typename Problem, typename Solution>
 class CacheManager {
  public:
     bool isSolved(Problem problem);

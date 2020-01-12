@@ -9,12 +9,12 @@
 
 using namespace std;
 namespace server_side {
-    class Server {
-    public:
-        virtual void open(int port, ClientHandler *client_handler) = 0;
-        virtual void stop() = 0;
-        virtual ~Server() = default;
-    };
+class Server {
+ public:
+  virtual void open(int port, ClientHandler *client_handler) = 0;
+  virtual void stop(int socketfd) = 0;
+  virtual ~Server() = default;
+};
 }
 
 #endif //EX4_SERVER_H

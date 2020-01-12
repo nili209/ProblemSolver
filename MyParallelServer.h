@@ -8,7 +8,6 @@
 using namespace server_side;
 class MyParallelServer : public Server {
 public:
-  //love
     virtual void open(int port, ClientHandler* client_handler) = 0;
     virtual void stop() = 0;
     virtual ~MyParallelServer() = default;

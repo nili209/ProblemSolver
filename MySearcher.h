@@ -7,8 +7,8 @@
 
 #include "Searcher.h"
 //love
-template <class Solution, typename Problem, typename T>
-class MySearcher : public Searcher<Solution, Problem> {
+template <class Problem, typename Solution, typename T>
+class MySearcher : public Searcher<Problem, Solution> {
  private:
   int number_of_nodes_evaluated = 1;
   string solution;

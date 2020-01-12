@@ -7,7 +7,7 @@
 #include "CacheManager.h"
 #define PROBLEM "Problem_"
 template <typename Solution>
-class FileCacheManager : public CacheManager<Solution, string> {
+class FileCacheManager : public CacheManager<string, Solution> {
  private:
   int number_of_problem = 0;
   int capacity;
