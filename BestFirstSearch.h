@@ -10,7 +10,8 @@
 #include <vector>
 #include "MySearcher.h"
 template<typename T>
-class BestFirstSearch : public MySearcher<string, T> {
+//love
+class BestFirstSearch : public MySearcher<string, Searchable<T>*, T> {
   class MyComperator {
    public:
     bool operator()(State<T>* left, State<T>* right) {
@@ -20,40 +21,38 @@ class BestFirstSearch : public MySearcher<string, T> {
  private:
   priority_queue<State<T>*, vector<State<T>*>, MyComperator> open_priority_queue;
   vector<State<T>*> closed;
-  string solution;
-  string backTrace(State<T>* state, State<T>* init, State<T>* goal) {
-    if(state->Equals(init)) {
-      return solution;
-    }
-    string direction = state->getDirection();
-    solution.insert(0, direction);
-    if (!state->Equals(goal)) {
-      solution.insert(direction.length(), ", ");
-    }
-    return backTrace(state->getComeFrom(), init, goal);
-  }
  public:
+  /**
+   * Given a Searchable, the function returns the cheapest path from it's initial state to it's goal state.
+   * Using the algorithm of Best First Search.
+   */
   string search(Searchable<T> *searchable) {
     addToOpenPriorityQueue(searchable->getInitialState());
     while (!open_priority_queue.empty()) {
+      //pop the lowest trial cost state from open queue.
       State<T>* current = popOpenPriorityQueue();
       closed.push_back(current);
+      //this is the goal state.
       if (current->Equals(searchable->getGoalState())) {
-        return backTrace(current, searchable->getInitialState(), searchable->getGoalState());
+        return this->backTrace(current, searchable->getInitialState(), searchable->getGoalState());
       }
       vector<State<T>*> neighbors = searchable->getAllPossibleStates(current);
       for(State<T>* neighbor : neighbors) {
+        //we did not reached to this state until now or we already done evaluating it.
         if (!isClosedContain(neighbor) && !isOpenContain(neighbor)) {
-          this->number_of_nodes_evaluated++;
+          //number_of_nodes_evaluated++;
+          this->setNumberOfNodesEvaluated(1);
           neighbor->setComeFrom(current);
           addToOpenPriorityQueue(neighbor);
         } else {
           double prev_trial = neighbor->getTrailCost();
           double curr_trial = current->getTrailCost() + neighbor->getCost();
+          //the current path is better.
           if (curr_trial < prev_trial) {
             if (!isOpenContain(neighbor)) {
               addToOpenPriorityQueue(neighbor);
             } else {
+              //update the trial cost to the lower trial cost.
               neighbor->setTrailCost(curr_trial);
               neighbor->setComeFrom(current);
               open_priority_queue = updatePriorityQ(open_priority_queue);
@@ -63,6 +62,9 @@ class BestFirstSearch : public MySearcher<string, T> {
       }
     }
   }
+  /**
+   * The function updates the open priority queue.
+   */
   priority_queue<State<T>*, vector<State<T> *>, MyComperator> updatePriorityQ(priority_queue<State<T> *,
       vector<State<T> *>, MyComperator> prev_priority_queue){
     priority_queue<State<T> *, vector<State<T> *>, MyComperator> newQ;
@@ -72,14 +74,23 @@ class BestFirstSearch : public MySearcher<string, T> {
     }
     return newQ;
   }
+  /**
+   * Given a State, the function add it to open priotiy queue
+   */
   void addToOpenPriorityQueue(State<T> *s) {
     open_priority_queue.push(s);
   }
+  /**
+   * Pop the top State of the priority queue and returns it.
+   */
   State<T>* popOpenPriorityQueue() {
     State<T>* temp = open_priority_queue.top();
     open_priority_queue.pop();
     return temp;
   }
+  /**
+   * Given a State, the function returns true if closed contains it and false otherwise.
+   */
   bool isClosedContain(State<T> *s) {
     for (State<T>* n : closed) {
       if (s->Equals(n)) {
@@ -88,6 +99,9 @@ class BestFirstSearch : public MySearcher<string, T> {
     }
     return false;
   }
+  /**
+ * Given a State, the function returns true if open priority queue  contains it and false otherwise.
+ */
   bool isOpenContain(State<T> *state1) {
     priority_queue<State<T>*, vector<State<T>*>, MyComperator> temp = open_priority_queue;
     while (!temp.empty()) {
@@ -99,6 +113,9 @@ class BestFirstSearch : public MySearcher<string, T> {
     }
     return false;
   }
+  /**
+   * Destructor.
+   */
   virtual ~BestFirstSearch() = default;
 
 };

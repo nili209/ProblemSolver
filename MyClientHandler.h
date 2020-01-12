@@ -14,11 +14,11 @@
 #include "FileCacheManager.h"
 class MyClientHandler : public ClientHandler {
  private:
-  FileCacheManager cache_manager;
+  FileCacheManager<const char*> cache_manager;
   Searchable<Point> *matrix;
   vector<State<Point> *> structure;
   string problem = "";
-  SearchSolver<Searchable<Point>, string> *search_solver;
+  SearchSolver<Searchable<Point>*, const char*> *search_solver;
  public:
   virtual void handleClient(istream input_stream, ostream output_stream) = 0;
   virtual ~MyClientHandler() = default;

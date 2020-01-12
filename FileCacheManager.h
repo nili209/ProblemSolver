@@ -4,36 +4,38 @@
 
 #ifndef EX4_FILECACHEMANAGER_H
 #define EX4_FILECACHEMANAGER_H
-
 #include "CacheManager.h"
-class FileCacheManager : public CacheManager<string, string> {
+#define PROBLEM "Problem_"
+template <typename Solution>
+class FileCacheManager : public CacheManager<Solution, string> {
  private:
+  int number_of_problem = 0;
   int capacity;
   // <key, <value, key iterator>>
-  unordered_map<string, pair<string, list<string>::iterator>> cache;
+  unordered_map<string, pair<Solution, list<string>::iterator>> cache;
   // list of keys. first - mru, last - lru
   list<string> lru;
   list<string> file_name;
-  unordered_map<string, string> file_name_map;
-  void search_key_in_file(string &file_name_s, string& obj) {
+  //<problem, problem_name>
+  unordered_map<string, string> problem_map;
+  void search_key_in_file(string &problem, Solution& obj) {
     ifstream is;
-    for (auto it = file_name.begin(); it!= file_name.end(); ++it) {
-      if ((file_name_s).compare(*it) == 0) {
-        is.open(file_name_s, ios::in| ios::binary);
-        if(!is.is_open()) {
-          throw "error opening the file";
-        }
-        is.read((char*) &(obj), sizeof(obj));
-        is.close();
-        return;
+    auto item = problem_map.find(problem);
+    if (item != problem_map.end()) {
+      is.open(item->second, ios::in| ios::binary);
+      if(!is.is_open()) {
+        throw "error opening the file";
       }
+      is.read((char*) &(obj), sizeof(obj));
+      is.close();
+      return;
     }
     return;
   }
-  void insert(string key, string obj) {
-    write_to_file(key, obj);
+  void insert(string problem, Solution obj) {
+    write_to_file(problem, obj);
     //check if key exist in the cache, if so - update it. else - add it to the cache
-    auto item = cache.find(key);
+    auto item = cache.find(problem);
     //key exists in the cache
     if (item != cache.end()) {
       //update the key to be MRU
@@ -49,32 +51,37 @@ class FileCacheManager : public CacheManager<string, string> {
       cache.erase(lru.back());
       lru.pop_back();
     }
-    lru.push_front(key);
-    cache.insert({key, {obj, lru.begin()}});
+    lru.push_front(problem);
+    cache.insert({problem, {obj, lru.begin()}});
   }
-  void write_to_file(string key, string& obj) {
-    string c_name = key + ".txt";
-    file_name.push_front(c_name);
-    file_name_map.insert({c_name, c_name});
+  void write_to_file(string problem, Solution& obj) {
+    string problem_name;
+    auto item = problem_map.find(problem);
+    if (item != problem_map.end()) {
+      problem_name = item->second;
+    } else {
+      problem_name = PROBLEM + to_string(number_of_problem) + ".txt";
+      file_name.push_front(problem_name);
+      number_of_problem++;
+      problem_map.insert({problem, problem_name});
+    }
     ofstream outf;
-    outf.open(c_name, ios::out | ios::binary);
+    outf.open(problem_name, ios::out | ios::binary);
     if(!outf.is_open()) {
       throw "error opening the file";
     }
     outf.write((char*)(&obj), sizeof(obj));
     outf.close();
   }
-  string get(string key) {
-    string value;
-    string c_name = key + ".txt";
-    string name = c_name;
+  Solution get(string problem) {
+    Solution value;
     //searching for the key in the cache
-    auto item = cache.find(key);
+    auto item = cache.find(problem);
     //the key does not exist in the cache
     if (item == cache.end()) {
       //search the key in the files
-      search_key_in_file(name, value);
-      insert(key, value);
+      search_key_in_file(problem, value);
+      insert(problem, value);
       //the key is in the cache
     } else {
       //update the key to be MRU
@@ -83,7 +90,7 @@ class FileCacheManager : public CacheManager<string, string> {
     }
     return value;
   }
-  void use_update(typename unordered_map<string, pair<string, list<string>::iterator>>::iterator &it) {
+  void use_update(typename unordered_map<string, pair<Solution, list<string>::iterator>>::iterator &it) {
     lru.erase(it->second.second);
     lru.push_front(it->first);
     it->second.second = lru.begin();
@@ -98,21 +105,35 @@ class FileCacheManager : public CacheManager<string, string> {
     }
   }
  public:
-  FileCacheManager() : capacity(-1) {}
+  /**
+   * Constructor.
+   */
+  FileCacheManager(int capacity_m) : capacity(capacity_m) {}
+  /**
+   * Given a problem, the function returns true if the cache contains it's solution and false otherwise.
+   */
   bool isSolved(string problem) {
-    string key = problem + ".txt";
-    auto item = file_name_map.find(key);
-    if (item == file_name_map.end()) {
+    auto item = problem_map.find(problem);
+    if (item == problem_map.end()) {
       return false;
     }
     return true;
   }
-  void saveSolution(string solution, string problem) {
+  /**
+   * Given a Solution and a problem, the function save the solution in the cache.
+   */
+  void saveSolution(Solution solution, string problem) {
     insert(problem, solution);
   }
-  string getSolution(string problem) {
+  /**
+   * Given a problem, the function returns it's solution.
+   */
+  Solution getSolution(string problem) {
     return get(problem);
   }
+  /**
+   * Destructor.
+   */
   virtual ~FileCacheManager() = default;
 };
 #endif //EX4_FILECACHEMANAGER_H

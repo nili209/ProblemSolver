@@ -20,7 +20,7 @@ void tester(Searcher<string, Point>* searcher) {
   Searchable<Point>* matrix = buildSearchable();
 }
 int main(int argc, char* argv[]) {
-  Searcher<string, Point>* searcher(new BestFirstSearch<Point>);
+  Searcher<string, Searchable<Point>*>* searcher(new BestFirstSearch<Point>);
   Point * initial_point = new Point(0,0);
   Point * p01 = new Point(0,1);
   Point * p10 = new Point(1,0);
@@ -44,14 +44,12 @@ int main(int argc, char* argv[]) {
   string s = searcher->search(matrix);
   std::cout<<"test1: "<<s<<endl<<"number of nodes = " << searcher->getNumberOfNodesEvaluated()<<endl;
   //test2
-  Searcher<string, Point>* searcher2(new BestFirstSearch<Point>);
+  Searcher<string, Searchable<Point>*>* searcher2(new BestFirstSearch<Point>);
   initial_point = new Point(0,0);
   p01 = new Point(0,1);
   p10 = new Point(1,0);
   goal_point = new Point(1,1);
   vector<State<Point>*> structure2;
-  State<Point>* arr[6];
-  //arr[0] =
   initial_state1 = new State<Point>(*initial_point, 1);
   state2 = new State<Point>(*p01, 2);
   state3 = new State<Point>(*p10, 3);
@@ -64,7 +62,7 @@ int main(int argc, char* argv[]) {
   string s1 = searcher2->search(matrix2);
   std::cout<<"test2: "<< s1<<endl<<"number of nodes = " << searcher2->getNumberOfNodesEvaluated()<<endl;
   //test3
-  Searcher<string, Point>* searcher3(new BestFirstSearch<Point>);
+  Searcher<string, Searchable<Point>*>* searcher3(new BestFirstSearch<Point>);
   initial_point = new Point(0,0);
   p01 = new Point(0,1);
   Point* p02 = new Point(0,2);
@@ -99,16 +97,16 @@ int main(int argc, char* argv[]) {
   string problem1 = "1,2;3,4;0;0;1;1";
   string problem2 = "1,4;7,1;0,10;0;0;2;1";
   string problem3 = "1,8,10;9,1000,8;10,0,2;0;0;2;2";
-  FileCacheManager my_cache;
+  FileCacheManager<const char*> my_cache(-1);
   cout<<my_cache.isSolved(problem1)<<endl;
-  my_cache.saveSolution(s1,problem1);
+  my_cache.saveSolution(s1.c_str(),problem1);
   cout<<my_cache.isSolved(problem1)<<endl;
   cout<<my_cache.getSolution(problem1)<<endl;
   /****
    *
    */
   cout<<my_cache.isSolved(problem2)<<endl;
-  my_cache.saveSolution(s,problem2);
+  my_cache.saveSolution(s.c_str(),problem2);
   cout<<my_cache.isSolved(problem2)<<endl;
   cout<<my_cache.getSolution(problem2)<<endl;
   cout<<my_cache.isSolved(problem2)<<endl;
@@ -116,8 +114,14 @@ int main(int argc, char* argv[]) {
    *
    */
   cout<<my_cache.isSolved(problem3)<<endl;
-  my_cache.saveSolution(s2,problem3);
+  my_cache.saveSolution(s2.c_str(),problem3);
   cout<<my_cache.isSolved(problem3)<<endl;
   cout<<my_cache.getSolution(problem3)<<endl;
+
+  cout<<my_cache.getSolution(problem1)<<endl;
+  string trying = "shiraz";
+  my_cache.saveSolution(trying.c_str(),problem1);
+  cout<<my_cache.getSolution(problem3)<<endl;
+  cout<<my_cache.getSolution(problem1)<<endl;
   return 0;
 }

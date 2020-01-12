@@ -2,6 +2,9 @@
 // Created by nili and shiraz on 1/8/20.
 //
 #include "StringReverser.h"
+/**
+ * Given a string, the function returns the reverse string.
+ */
 string StringReverser::solve(string problem) {
     int n = problem.length();
     for (int i = 0; i < n / 2; i++) {

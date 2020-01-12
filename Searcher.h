@@ -10,7 +10,7 @@ template <class Solution,class Problem>
 class Searcher {
 public:
     Searcher<Solution, Problem>(){}
-    virtual Solution search(Searchable<Point>* searchable) = 0;
+    virtual Solution search(Problem searchable) = 0;
     virtual int getNumberOfNodesEvaluated() = 0;
     virtual ~Searcher() = default;
 };
