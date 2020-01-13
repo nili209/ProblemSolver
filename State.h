@@ -70,6 +70,7 @@ class State {
    * The function returns the direction necessary to get the this state's parent.
    */
   string getDirection() {
+    //T?
     Point parent = come_from->getState();
       if (parent.isUpNeighbor(state)) {
         return UP;
