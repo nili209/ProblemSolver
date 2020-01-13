@@ -98,8 +98,8 @@ namespace boot {
             string problem2 = "1,4;7,1;0,10;0;0;2;1";
             string problem3 = "1,8,10;9,1000,8;10,0,2;0;0;2;2";
             CacheManager<string, string> *my_cache = new FileCacheManager<string>(-1);
-            //cout << my_cache->isSolved(problem1) << endl;
-            //my_cache->saveSolution(s1, problem1);
+            cout << my_cache->isSolved(problem1) << endl;
+            my_cache->saveSolution(s1, problem1);
             //cout << my_cache->isSolved(problem1) << endl;
             //cout << my_cache->getSolution(problem1) << endl;
             /****
@@ -120,15 +120,16 @@ namespace boot {
 
             cout << my_cache->getSolution(problem1) << endl;
             string trying = "shiraz";
-            my_cache->saveSolution(trying, problem1);
+            string prob = "prob";
+            my_cache->saveSolution(trying, prob);
             cout << my_cache->getSolution(problem3) << endl;
-            cout << my_cache->getSolution(problem1) << endl;
+            cout << my_cache->getSolution(prob) << endl;
             ///string reverser
             CacheManager<string, string> *my_cache2 = new FileCacheManager<string>(-1);
             server_side::Server *server = new MySerialServer();
             Solver<string, string> *string_reverser = new StringReverser();
             ClientHandler *c = new MyTestClientHandler<string, string>(string_reverser, my_cache2);
-            server->open(port, c);
+            //server->open(port, c);
             ///BestFS
 //            CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
 //            server_side::Server *server1 = new MySerialServer();

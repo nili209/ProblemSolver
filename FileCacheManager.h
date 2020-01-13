@@ -6,10 +6,11 @@
 #define EX4_FILECACHEMANAGER_H
 #include "CacheManager.h"
 #define PROBLEM "Problem_"
+#include <functional>
+#include <string>
 template <typename Solution>
 class FileCacheManager : public CacheManager<string, Solution> {
  private:
-  int number_of_problem = 0;
   int capacity;
   // <key, <value, key iterator>>
   unordered_map<string, pair<Solution, list<string>::iterator>> cache;
@@ -60,9 +61,10 @@ class FileCacheManager : public CacheManager<string, Solution> {
     if (item != problem_map.end()) {
       problem_name = item->second;
     } else {
-      problem_name = PROBLEM + to_string(number_of_problem) + ".txt";
+      hash<string> hasher;
+      auto problem_hashed = hasher(problem);
+      problem_name = PROBLEM + to_string(problem_hashed) + ".txt";
       file_name.push_front(problem_name);
-      number_of_problem++;
       problem_map.insert({problem, problem_name});
     }
     ofstream outf;
