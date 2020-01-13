@@ -26,16 +26,16 @@ class MyClientHandler : public ClientHandler {
   //can be searchsolver?
   Solver<Problem, Solution> *solver;
  public:
-  MyClientHandler(Solver<Problem, const char *> *solver1, CacheManager<Problem, Solution> *cache_menager1) :
+  MyClientHandler(Solver<Problem, string> *solver1, CacheManager<Problem, Solution> *cache_menager1) :
   solver(solver1), cache_manager(cache_menager1) {}
   virtual void handleClient(int client_socket_in, int client_socket_out) {
     const char *solution;
     //just read into a buffer of string problem
     initProblem(client_socket_in);
     if (cache_manager->isSolved(problem)) {
-      solution = cache_manager->getSolution(problem);
+      solution = cache_manager->getSolution(problem).c_str();
     } else {
-      solution = solver->solve(problem);
+      solution = solver->solve(problem).c_str();
       cache_manager->saveSolution(solution, problem);
     }
     //does the length of solution is sizeof(solution)?
