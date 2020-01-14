@@ -132,34 +132,25 @@ class Main {
 //    Solver<string, string> *string_reverser = new StringReverser();
 //    ClientHandler *c = new MyTestClientHandler<string, string>(string_reverser, my_cache2);
 //    server->open(port, c);
-    ///BestFS
-//    CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
-//    server_side::Server *server1 = new MySerialServer();
-//    Searcher<Point, string> *searcher9(new BestFirstSearch<Point, string>);
-//    Solver<string, string> *matrix_solver = new SearchSolver<Point, string>(searcher9);
-//    ClientHandler *c = new MyClientHandler<string, string>(matrix_solver, my_cache3);
-//    //string s9 = matrix_solver->solve(problem1);
-//    //cout<<s9<<endl;
-//    server1->open(port, c);
-    ///BFS
-//    CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
-//    server_side::Server *server1 = new MySerialServer();
-//    Searcher<Point, string> *searcher9(new BFS<Point, string>);
-//    Solver<string, string> *matrix_solver = new SearchSolver<Point, string>(searcher9);
-//    ClientHandler *c = new MyClientHandler<string, string>(matrix_solver, my_cache3);
-//    //string s9 = matrix_solver->solve(problem1);
-//    //cout<<s9<<endl;
-//    server1->open(port, c);
-
-    ///DFS
+    ///General initialization
     CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
     server_side::Server *server1 = new MySerialServer();
-    Searcher<Point, string> *searcher9(new DFS<Point, string>);
-    Solver<string, string> *matrix_solver = new SearchSolver<Point, string>(searcher9);
-    ClientHandler *c = new MyClientHandler<string, string>(matrix_solver, my_cache3);
-    //string s9 = matrix_solver->solve(problem1);
-    //cout<<s9<<endl;
-    server1->open(port, c);
+    ///BestFS
+//    Searcher<Point, string> *searcher_BestFS(new BestFirstSearch<Point, string>);
+//    Solver<string, string> *matrix_solver_BestFS = new SearchSolver<Point, string>(searcher_BestFS);
+//    ClientHandler *c_BestFS = new MyClientHandler<string, string>(matrix_solver_BestFS, my_cache3);
+//    server1->open(port, c_BestFS);
+    ///BFS
+    Searcher<Point, string> *searcher_BFS(new BFS<Point, string>);
+    Solver<string, string> *matrix_solver_BFS = new SearchSolver<Point, string>(searcher_BFS);
+    ClientHandler *c_BFS = new MyClientHandler<string, string>(matrix_solver_BFS, my_cache3);
+    server1->open(port, c_BFS);
+
+    ///DFS
+    Searcher<Point, string> *searcher_DFS(new DFS<Point, string>);
+    Solver<string, string> *matrix_solver_DFS = new SearchSolver<Point, string>(searcher_DFS);
+    ClientHandler *c_DFS = new MyClientHandler<string, string>(matrix_solver_DFS, my_cache3);
+    server1->open(port, c_DFS);
   }
 
 };

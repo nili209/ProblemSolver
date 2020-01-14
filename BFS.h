@@ -24,9 +24,11 @@ class BFS : public MySearcher<T, Solution> {
     my_queue.push(init_state);
     init_state->setVisited(true);
     while(!my_queue.empty()) {
-      State<T>* current_state = dequeue();
+      State<T>* current_state = my_queue.front();
+      my_queue.pop();
       this->setNumberOfNodesEvaluated(1);
       if (current_state->Equals(goal_state)) {
+        cout<<"BFS:"<<endl;
         return this->backTrace(current_state, init_state, goal_state);
       }
       vector<State<T>*> neighbors = searchable->getAllPossibleStates(current_state);
@@ -39,11 +41,6 @@ class BFS : public MySearcher<T, Solution> {
       }
     }
     return NO_PATH;
-  }
-  State<T>* dequeue() {
-    State<T>* front = my_queue.front();
-    my_queue.pop();
-    return front;
   }
 };
 

@@ -23,11 +23,12 @@ class DFS : public MySearcher<T, Solution> {
     init_state->setVisited(true);
     while (!my_stack.empty()) {
       State<T> *current_state = my_stack.top();
+      my_stack.pop();
       if (current_state->Equals(searchable->getGoalState())) {
-        return this->backTrace(current_state, searchable->getInitialState(), searchable->getGoalState());
+        cout<<"DFS:"<<endl;
+        return this->backTrace(current_state, init_state, goal_state);
       }
       this->setNumberOfNodesEvaluated(1);
-      my_stack.pop();
       vector<State<T> *> neighbors = searchable->getAllPossibleStates(current_state);
       for (State<T> *neighbor : neighbors) {
         if (!neighbor->isVisited()) {

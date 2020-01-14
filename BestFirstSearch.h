@@ -1,5 +1,5 @@
 //
-// Created by nili on 1/8/20.
+// Created by nili and shiraz on 1/8/20.
 //
 
 #ifndef EX4_BESTFIRSTSEARCH_H
@@ -29,13 +29,15 @@ class BestFirstSearch : public MySearcher<T, Solution> {
   string search(Searchable<T> *searchable) {
     State<T>* init_state = searchable->getInitialState();
     State<T>* goal_state = searchable->getGoalState();
-    addToOpenPriorityQueue(searchable->getInitialState());
+    open_priority_queue.push(init_state);
     while (!open_priority_queue.empty()) {
       //pop the lowest trial cost state from open queue.
-      State<T>* current_state = popOpenPriorityQueue();
+      State<T>* current_state = open_priority_queue.top();
+      open_priority_queue.pop();
       closed.push_back(current_state);
       //this is the goal state.
       if (current_state->Equals(searchable->getGoalState())) {
+        cout<<"Best First Search:"<<endl;
         return this->backTrace(current_state, init_state, goal_state);
       }
       vector<State<T>*> neighbors = searchable->getAllPossibleStates(current_state);
@@ -45,14 +47,14 @@ class BestFirstSearch : public MySearcher<T, Solution> {
           //number_of_nodes_evaluated++;
           this->setNumberOfNodesEvaluated(1);
           neighbor->setComeFrom(current_state);
-          addToOpenPriorityQueue(neighbor);
+          open_priority_queue.push(neighbor);
         } else {
           double prev_trial = neighbor->getTrailCost();
           double curr_trial = current_state->getTrailCost() + neighbor->getCost();
           //the current path is better.
           if (curr_trial < prev_trial) {
             if (!isOpenContain(neighbor)) {
-              addToOpenPriorityQueue(neighbor);
+              open_priority_queue.push(neighbor);
             } else {
               //update the trial cost to the lower trial cost.
               neighbor->setTrailCost(curr_trial);
@@ -76,21 +78,6 @@ class BestFirstSearch : public MySearcher<T, Solution> {
       prev_priority_queue.pop();
     }
     return newQ;
-  }
-
-  /**
-   * Given a State, the function add it to open priotiy queue
-   */
-  void addToOpenPriorityQueue(State<T> *s) {
-    open_priority_queue.push(s);
-  }
-  /**
-   * Pop the top State of the priority queue and returns it.
-   */
-  State<T>* popOpenPriorityQueue() {
-    State<T>* temp = open_priority_queue.top();
-    open_priority_queue.pop();
-    return temp;
   }
   /**
    * Given a State, the function returns true if closed contains it and false otherwise.
