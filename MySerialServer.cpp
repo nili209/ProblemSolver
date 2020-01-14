@@ -4,9 +4,8 @@
 #include <sstream>
 #include <unistd.h>
 #include <mutex>
-#include <condition_variable>
 #include "MySerialServer.h"
-#define TIME_OUT 2
+#define TIME_OUT 3
 static int socketfd;
 void MySerialServer::start(int port, ClientHandler *client_handler) {
   //open socket

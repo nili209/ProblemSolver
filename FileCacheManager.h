@@ -8,7 +8,7 @@
 #define PROBLEM "Problem_"
 #include <functional>
 #include <string>
-template <typename Solution>
+template<typename Solution>
 class FileCacheManager : public CacheManager<string, Solution> {
  private:
   int capacity;
@@ -19,18 +19,25 @@ class FileCacheManager : public CacheManager<string, Solution> {
   list<string> file_name;
   //<problem, problem_name>
   unordered_map<string, string> problem_map;
-  void search_key_in_file(string &problem, Solution& obj) {
+  void search_key_in_file(string &problem, Solution &obj) {
     ifstream is;
-    auto item = problem_map.find(problem);
-    if (item != problem_map.end()) {
-      is.open(item->second, ios::in| ios::binary);
-      if(!is.is_open()) {
-        throw "error opening the file";
-      }
-      is.read((char*) &(obj), sizeof(obj));
-      is.close();
-      return;
+    hash < string > hasher;
+    auto problem_hashed = hasher(problem);
+    string problem_name = PROBLEM + to_string(problem_hashed) + ".txt";
+    is.open(problem_name, ios::in | ios::binary);
+    if (!is.is_open()) {
+      throw "error opening the file";
     }
+    //assuming obj is a string
+    char s = ' ';
+    is.get(s);
+    while (s != EOF) {
+      obj += s;
+      s = EOF;
+      is.get(s);
+    }
+    //is.read((char*) &(obj), sizeof(obj));
+    is.close();
     return;
   }
   void insert(string problem, Solution obj) {
@@ -48,31 +55,36 @@ class FileCacheManager : public CacheManager<string, Solution> {
     //key does not exist in the cache
     //if we reached the limited size of the cache we need to remove thr lru in order to add the new item
     int size = cache.size();
-    if (size == capacity) {
+    if (size == capacity && size != 0) {
       cache.erase(lru.back());
       lru.pop_back();
     }
-    lru.push_front(problem);
-    cache.insert({problem, {obj, lru.begin()}});
+    if (size > 0) {
+      lru.push_front(problem);
+      cache.insert({problem, {obj, lru.begin()}});
+    }
   }
-  void write_to_file(string problem, Solution& obj) {
+  void write_to_file(string problem, Solution &obj) {
     string problem_name;
     auto item = problem_map.find(problem);
     if (item != problem_map.end()) {
       problem_name = item->second;
     } else {
-      hash<string> hasher;
+      hash < string > hasher;
       auto problem_hashed = hasher(problem);
       problem_name = PROBLEM + to_string(problem_hashed) + ".txt";
       file_name.push_front(problem_name);
       problem_map.insert({problem, problem_name});
     }
     ofstream outf;
-    outf.open(problem_name, ios::out | ios::binary);
-    if(!outf.is_open()) {
+    outf.open(problem_name, ios::out | ios::binary);// | ios::trunc);
+    if (!outf.is_open()) {
       throw "error opening the file";
     }
-    outf.write((char*)(&obj), sizeof(obj));
+    //assuming obj is a string
+    unsigned int size = obj.size();
+    outf.write(obj.c_str(), size);
+    //outf.write((char*)(&obj), sizeof(obj));
     outf.close();
   }
   Solution get(string problem) {
@@ -99,7 +111,7 @@ class FileCacheManager : public CacheManager<string, Solution> {
   }
   template<typename Printer>
   void foreach(Printer pFunction) {
-    for (auto it = lru.begin(); it!= lru.end();++it) {
+    for (auto it = lru.begin(); it != lru.end(); ++it) {
       auto item = cache.find(*it);
       if (item != cache.end()) {
         pFunction(item->second.first);
@@ -117,6 +129,13 @@ class FileCacheManager : public CacheManager<string, Solution> {
   bool isSolved(string problem) {
     auto item = problem_map.find(problem);
     if (item == problem_map.end()) {
+      hash < string > hasher;
+      auto problem_hashed = hasher(problem);
+      string problem_name = PROBLEM + to_string(problem_hashed) + ".txt";
+      ifstream ifstream1(problem_name);
+      if (ifstream1) {
+        return true;
+      }
       return false;
     }
     return true;

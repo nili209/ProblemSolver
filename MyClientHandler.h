@@ -33,7 +33,8 @@ class MyClientHandler : public ClientHandler {
     //just read into a buffer of string problem
     initProblem(client_socket_in);
     if (cache_manager->isSolved(problem)) {
-      solution = cache_manager->getSolution(problem).c_str();
+      s = cache_manager->getSolution(problem);
+      solution = s.c_str();
     } else {
       s= solver->solve(problem);
       solution = s.c_str();
@@ -44,6 +45,7 @@ class MyClientHandler : public ClientHandler {
       cout << "Error sending message" << endl;
       exit(1);
     }
+    problem = "";
   }
   void initProblem(int client_socket_in) {
     while (true) {
