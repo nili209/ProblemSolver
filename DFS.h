@@ -16,23 +16,26 @@ class DFS : public MySearcher<T, Solution> {
  private:
   stack<State<T> *> my_stack;
  public:
-  string search(Searchable<T> *searchable) {
+  Solution search(Searchable<T> *searchable) {
     State<T> *init_state = searchable->getInitialState();
     State<T> *goal_state = searchable->getGoalState();
     my_stack.push(init_state);
-    init_state->setVisited(true);
+    this->addToClosed(init_state);
+    //init_state->setVisited(true);
     while (!my_stack.empty()) {
       State<T> *current_state = my_stack.top();
       my_stack.pop();
       if (current_state->Equals(searchable->getGoalState())) {
         cout<<"DFS:"<<endl;
+        cout<<"Trial cost: "<< current_state->getTrailCost()<<endl;
         return this->backTrace(current_state, init_state, goal_state);
       }
       this->setNumberOfNodesEvaluated(1);
       vector<State<T> *> neighbors = searchable->getAllPossibleStates(current_state);
       for (State<T> *neighbor : neighbors) {
-        if (!neighbor->isVisited()) {
-          neighbor->setVisited(true);
+        if (!this->isClosedContain(neighbor)) {
+          this->addToClosed(neighbor);
+          //neighbor->setVisited(true);
           neighbor->setComeFrom(current_state);
           my_stack.push(neighbor);
         }
@@ -40,7 +43,6 @@ class DFS : public MySearcher<T, Solution> {
     }
     return NO_PATH;
   }
-
 };
 
 #endif //EX4_DFS_H

@@ -6,6 +6,7 @@
 #define EX4_STATE_H
 #include "Point.h"
 #include <string>
+#include <cfloat>
 #define UP "Up"
 #define DOWN "Down"
 #define RIGHT "Right"
@@ -19,6 +20,7 @@ class State {
   double trail_cost;
   State<T> *come_from;
   bool is_visited = false;
+  double heuristic = FLT_MAX;
  public:
   /**
    * Constructor.
@@ -35,6 +37,12 @@ class State {
   }
   bool isVisited() {
     return is_visited;
+  }
+  double gerHeuristic() {
+    return heuristic;
+  }
+  void setHeuristic(double value) {
+    heuristic = value;
   }
   /**
    * Getter of trail_cost.

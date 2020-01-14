@@ -10,9 +10,10 @@
 template<typename T, typename Solution>
 class MySearcher : public Searcher<T, Solution> {
  private:
-  int number_of_nodes_evaluated = 1;
+  int number_of_nodes_evaluated = 0;
   Solution solution;
  protected:
+  vector<State<T>*> closed;
   void setNumberOfNodesEvaluated(int num) {
     number_of_nodes_evaluated += num;
   }
@@ -24,6 +25,7 @@ class MySearcher : public Searcher<T, Solution> {
  */
   Solution backTrace(State<T> *state, State<T> *init, State<T> *goal) {
     if (state->Equals(init)) {
+      cout<<"Number of nodes evaluated: "<< number_of_nodes_evaluated <<endl;
       return solution;
     }
     //up, down, right or left.
@@ -33,6 +35,17 @@ class MySearcher : public Searcher<T, Solution> {
       solution.insert(direction.length(), ", ");
     }
     return backTrace(state->getComeFrom(), init, goal);
+  }
+  void addToClosed(State<T>* s) {
+    closed.push_back(s);
+  }
+  bool isClosedContain(State<T> *s) {
+    for (State<T>* n : closed) {
+      if (s->Equals(n)) {
+        return true;
+      }
+    }
+    return false;
   }
  public:
   virtual Solution search(Searchable<T> *searchable) = 0;

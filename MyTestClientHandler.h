@@ -35,14 +35,7 @@ class MyTestClientHandler : public ClientHandler {
       int valread = read(client_socket_in, buffer, LINE_SIZE);
       int i = 0;
       while (i < valread) {
-        //todo
-        if (buffer[i] == '\\') {
-          problem += ";";
-          done = true;
-          break;
-        }
         if (buffer[i] == '\n') {
-          problem += ";";
           done = true;
           break;
         }
@@ -50,12 +43,12 @@ class MyTestClientHandler : public ClientHandler {
         i++;
       }
     }
-      cache_manager->isSolved(problem);
       string solution = "";
       if (cache_manager->isSolved(problem)) {
         solution = cache_manager->getSolution(problem);
       } else {
-        solution = solver->solve(problem);
+        const char* p = problem.c_str();
+        solution = solver->solve(p);
         cache_manager->saveSolution(solution.c_str(), problem);
       }
       const char *solution_to_send = solution.c_str();

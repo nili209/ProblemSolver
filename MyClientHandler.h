@@ -56,12 +56,6 @@ class MyClientHandler : public ClientHandler {
         if (buffer[i] == END_OF_MESSAGE) {
           return;
         }
-        //todo
-        if(buffer[i] == '\\') {
-          problem += ";";
-          i+=2;
-          continue;
-        }
         if (buffer[i] == '\n') {
           problem += ";";
           i++;

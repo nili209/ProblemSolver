@@ -12,6 +12,7 @@
 #include "MySerialServer.h"
 #include "BFS.h"
 #include "DFS.h"
+#include "AStar.h"
 
 using namespace std;
 
@@ -126,33 +127,35 @@ class Main {
     my_cache->saveSolution(trying, prob);
     cout << my_cache->getSolution(problem3) << endl;
     cout << my_cache->getSolution(prob) << endl;
-    ///string reverser
-//    CacheManager<string, string> *my_cache2 = new FileCacheManager<string>(-1);
-//    server_side::Server *server = new MySerialServer();
-//    Solver<string, string> *string_reverser = new StringReverser();
-//    ClientHandler *c = new MyTestClientHandler<string, string>(string_reverser, my_cache2);
-//    server->open(port, c);
     ///General initialization
     CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
     server_side::Server *server1 = new MySerialServer();
-    ///BestFS
+    ///string reverser
+//
+//    Solver<string, string> *string_reverser = new StringReverser();
+//    ClientHandler *c_string_reverser = new MyTestClientHandler<string, string>(string_reverser, my_cache3);
+//    server1->open(port, c_string_reverser);
+//    ///BestFS
 //    Searcher<Point, string> *searcher_BestFS(new BestFirstSearch<Point, string>);
 //    Solver<string, string> *matrix_solver_BestFS = new SearchSolver<Point, string>(searcher_BestFS);
 //    ClientHandler *c_BestFS = new MyClientHandler<string, string>(matrix_solver_BestFS, my_cache3);
 //    server1->open(port, c_BestFS);
-    ///BFS
-    Searcher<Point, string> *searcher_BFS(new BFS<Point, string>);
-    Solver<string, string> *matrix_solver_BFS = new SearchSolver<Point, string>(searcher_BFS);
-    ClientHandler *c_BFS = new MyClientHandler<string, string>(matrix_solver_BFS, my_cache3);
-    server1->open(port, c_BFS);
-
-    ///DFS
-    Searcher<Point, string> *searcher_DFS(new DFS<Point, string>);
-    Solver<string, string> *matrix_solver_DFS = new SearchSolver<Point, string>(searcher_DFS);
-    ClientHandler *c_DFS = new MyClientHandler<string, string>(matrix_solver_DFS, my_cache3);
-    server1->open(port, c_DFS);
+//    ///BFS
+//    Searcher<Point, string> *searcher_BFS(new BFS<Point, string>);
+//    Solver<string, string> *matrix_solver_BFS = new SearchSolver<Point, string>(searcher_BFS);
+//    ClientHandler *c_BFS = new MyClientHandler<string, string>(matrix_solver_BFS, my_cache3);
+//    server1->open(port, c_BFS);
+//    ///DFS
+//    Searcher<Point, string> *searcher_DFS(new DFS<Point, string>);
+//    Solver<string, string> *matrix_solver_DFS = new SearchSolver<Point, string>(searcher_DFS);
+//    ClientHandler *c_DFS = new MyClientHandler<string, string>(matrix_solver_DFS, my_cache3);
+//    server1->open(port, c_DFS);
+    ///AStar
+    Searcher<Point, string> *searcher_AStar(new AStar<Point, string>);
+    Solver<string, string> *matrix_solver_AStar = new SearchSolver<Point, string>(searcher_AStar);
+    ClientHandler *c_AStar = new MyClientHandler<string, string>(matrix_solver_AStar, my_cache3);
+    server1->open(port, c_AStar);
   }
-
 };
 }
 

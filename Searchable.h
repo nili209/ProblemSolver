@@ -4,7 +4,6 @@
 
 #ifndef EX4_SEARCHABLE_H
 #define EX4_SEARCHABLE_H
-
 #include "State.h"
 #include <vector>
 using namespace std;
