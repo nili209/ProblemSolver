@@ -10,6 +10,7 @@
 #include "MyTestClientHandler.h"
 #include "MyClientHandler.h"
 #include "MySerialServer.h"
+#include "BFS.h"
 
 using namespace std;
 
@@ -131,9 +132,18 @@ class Main {
 //    ClientHandler *c = new MyTestClientHandler<string, string>(string_reverser, my_cache2);
 //    server->open(port, c);
     ///BestFS
+//    CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
+//    server_side::Server *server1 = new MySerialServer();
+//    Searcher<Point, string> *searcher9(new BestFirstSearch<Point, string>);
+//    Solver<string, string> *matrix_solver = new SearchSolver<Point, string>(searcher9);
+//    ClientHandler *c = new MyClientHandler<string, string>(matrix_solver, my_cache3);
+//    //string s9 = matrix_solver->solve(problem1);
+//    //cout<<s9<<endl;
+//    server1->open(port, c);
+    ///BFS
     CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
     server_side::Server *server1 = new MySerialServer();
-    Searcher<Point, string> *searcher9(new BestFirstSearch<Point, string>);
+    Searcher<Point, string> *searcher9(new BFS<Point, string>);
     Solver<string, string> *matrix_solver = new SearchSolver<Point, string>(searcher9);
     ClientHandler *c = new MyClientHandler<string, string>(matrix_solver, my_cache3);
     //string s9 = matrix_solver->solve(problem1);

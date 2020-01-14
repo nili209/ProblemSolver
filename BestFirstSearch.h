@@ -27,26 +27,28 @@ class BestFirstSearch : public MySearcher<T, Solution> {
    * Using the algorithm of Best First Search.
    */
   string search(Searchable<T> *searchable) {
+    State<T>* init_state = searchable->getInitialState();
+    State<T>* goal_state = searchable->getGoalState();
     addToOpenPriorityQueue(searchable->getInitialState());
     while (!open_priority_queue.empty()) {
       //pop the lowest trial cost state from open queue.
-      State<T>* current = popOpenPriorityQueue();
-      closed.push_back(current);
+      State<T>* current_state = popOpenPriorityQueue();
+      closed.push_back(current_state);
       //this is the goal state.
-      if (current->Equals(searchable->getGoalState())) {
-        return this->backTrace(current, searchable->getInitialState(), searchable->getGoalState());
+      if (current_state->Equals(searchable->getGoalState())) {
+        return this->backTrace(current_state, init_state, goal_state);
       }
-      vector<State<T>*> neighbors = searchable->getAllPossibleStates(current);
+      vector<State<T>*> neighbors = searchable->getAllPossibleStates(current_state);
       for(State<T>* neighbor : neighbors) {
         //we did not reached to this state until now or we already done evaluating it.
         if (!isClosedContain(neighbor) && !isOpenContain(neighbor)) {
           //number_of_nodes_evaluated++;
           this->setNumberOfNodesEvaluated(1);
-          neighbor->setComeFrom(current);
+          neighbor->setComeFrom(current_state);
           addToOpenPriorityQueue(neighbor);
         } else {
           double prev_trial = neighbor->getTrailCost();
-          double curr_trial = current->getTrailCost() + neighbor->getCost();
+          double curr_trial = current_state->getTrailCost() + neighbor->getCost();
           //the current path is better.
           if (curr_trial < prev_trial) {
             if (!isOpenContain(neighbor)) {
@@ -54,7 +56,7 @@ class BestFirstSearch : public MySearcher<T, Solution> {
             } else {
               //update the trial cost to the lower trial cost.
               neighbor->setTrailCost(curr_trial);
-              neighbor->setComeFrom(current);
+              neighbor->setComeFrom(current_state);
               open_priority_queue = updatePriorityQ(open_priority_queue);
             }
           }
