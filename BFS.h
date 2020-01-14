@@ -38,6 +38,7 @@ class BFS : public MySearcher<T, Solution> {
         }
       }
     }
+    return NO_PATH;
   }
   State<T>* dequeue() {
     State<T>* front = my_queue.front();

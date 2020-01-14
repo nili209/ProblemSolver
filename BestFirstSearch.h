@@ -63,6 +63,7 @@ class BestFirstSearch : public MySearcher<T, Solution> {
         }
       }
     }
+    return NO_PATH;
   }
   /**
    * The function updates the open priority queue.

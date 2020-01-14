@@ -4,7 +4,7 @@
 
 #ifndef EX4_MYSEARCHER_H
 #define EX4_MYSEARCHER_H
-
+#define NO_PATH "No path was found"
 #include "Searcher.h"
 // T = Point
 template <typename T, typename Solution>

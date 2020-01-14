@@ -11,6 +11,7 @@
 #include "MyClientHandler.h"
 #include "MySerialServer.h"
 #include "BFS.h"
+#include "DFS.h"
 
 using namespace std;
 
@@ -141,15 +142,26 @@ class Main {
 //    //cout<<s9<<endl;
 //    server1->open(port, c);
     ///BFS
+//    CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
+//    server_side::Server *server1 = new MySerialServer();
+//    Searcher<Point, string> *searcher9(new BFS<Point, string>);
+//    Solver<string, string> *matrix_solver = new SearchSolver<Point, string>(searcher9);
+//    ClientHandler *c = new MyClientHandler<string, string>(matrix_solver, my_cache3);
+//    //string s9 = matrix_solver->solve(problem1);
+//    //cout<<s9<<endl;
+//    server1->open(port, c);
+
+    ///DFS
     CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
     server_side::Server *server1 = new MySerialServer();
-    Searcher<Point, string> *searcher9(new BFS<Point, string>);
+    Searcher<Point, string> *searcher9(new DFS<Point, string>);
     Solver<string, string> *matrix_solver = new SearchSolver<Point, string>(searcher9);
     ClientHandler *c = new MyClientHandler<string, string>(matrix_solver, my_cache3);
     //string s9 = matrix_solver->solve(problem1);
     //cout<<s9<<endl;
     server1->open(port, c);
   }
+
 };
 }
 
