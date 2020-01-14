@@ -18,6 +18,7 @@ class State {
   double cost;
   double trail_cost;
   State<T> *come_from;
+  bool is_visited = false;
  public:
   /**
    * Constructor.
@@ -28,6 +29,9 @@ class State {
    */
   bool Equals(State<T>* s) {
     return state == s->state;
+  }
+  void setVisited(bool value) {
+    is_visited = value;
   }
   /**
    * Getter of trail_cost.
