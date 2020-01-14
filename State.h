@@ -33,6 +33,9 @@ class State {
   void setVisited(bool value) {
     is_visited = value;
   }
+  bool isVisited() {
+    return is_visited;
+  }
   /**
    * Getter of trail_cost.
    */
