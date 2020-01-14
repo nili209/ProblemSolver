@@ -49,7 +49,7 @@ class Main {
     goal_point = new Point(1, 1);
     vector<State<Point> *> structure2;
     initial_state1 = new State<Point>(*initial_point, 1);
-    state2 = new State<Point>(*p01, 2);
+    state2 = new State<Point>(*p01, -1);
     state3 = new State<Point>(*p10, 3);
     goal_state4 = new State<Point>(*goal_point, 4);
     structure2.push_back(initial_state1);
