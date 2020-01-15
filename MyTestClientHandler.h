@@ -10,7 +10,7 @@
 #include "ClientHandler.h"
 #include "CacheManager.h"
 #include "Solver.h"
-#define LINE_SIZE 1024
+#define LINE_SIZE 10
 #define END "end"
 template<class Problem, class Solution>
 class MyTestClientHandler : public ClientHandler {

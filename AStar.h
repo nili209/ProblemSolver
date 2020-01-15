@@ -17,23 +17,19 @@ class AStar : public MySearcher<T, Solution> {
       return (f_left > f_right);
     }
   };
- private:
-  priority_queue<State<T> *, vector<State<T> *>, MyComperator> open_priority_queue;
  public:
   /**
    * Given a Searchable, the function returns a path from it's initial state to it's goal state.
    * Using the algorithm of AStar.
    */
   Solution search(Searchable<T> *searchable) {
-    priority_queue<State<T> *, vector<State<T> *>, MyComperator> temp;
-    open_priority_queue = temp;
+    priority_queue<State<T> *, vector<State<T> *>, MyComperator> open_priority_queue;
     State<T> *init_state = searchable->getInitialState();
     State<T> *goal_state = searchable->getGoalState();
     open_priority_queue.push(init_state);
-    vector<State<T>*> c;
-    this->closed = c;
-    while (!this->open_priority_queue.empty()) {
-      State<T> *current_state = this->open_priority_queue.top();
+    vector<State<T>*> closed;
+    while (!open_priority_queue.empty()) {
+      State<T> *current_state = open_priority_queue.top();
       open_priority_queue.pop();
       this->setNumberOfNodesEvaluated(1);
       if (current_state->Equals(goal_state)) {
@@ -41,17 +37,17 @@ class AStar : public MySearcher<T, Solution> {
         cout << "Trial cost: " << current_state->getTrailCost() << endl;
         return this->backTrace(current_state, init_state, goal_state);
       }
-      this->addToClosed(current_state);
+      closed.push_back(current_state);
       vector<State<T> *> neighbors = searchable->getAllPossibleStates(current_state);
       for (State<T> *neighbor : neighbors) {
         double possible_trail_cost = neighbor->getCost() + current_state->getTrailCost();
-        if (!isOpenContain(neighbor) && !this->isClosedContain(neighbor)) {
+        if (!isOpenContain(neighbor, open_priority_queue) && !this->isClosedContain(neighbor, closed)) {
           neighbor->setComeFrom(current_state);
           neighbor->setTrailCost(possible_trail_cost);
           setHeuristic(neighbor, goal_state);
           open_priority_queue.push(neighbor);
           continue;
-        } else if (this->isClosedContain(neighbor)) {
+        } else if (this->isClosedContain(neighbor, closed)) {
           continue;
         } else if (possible_trail_cost < neighbor->getTrailCost()) {
           neighbor->setComeFrom(current_state);
@@ -87,7 +83,7 @@ class AStar : public MySearcher<T, Solution> {
   /**
  * Given a State, the function returns true if open priority queue  contains it and false otherwise.
  */
-  bool isOpenContain(State<T> *state1) {
+  bool isOpenContain(State<T> *state1, priority_queue<State<T> *, vector<State<T> *>, MyComperator> open_priority_queue) {
     priority_queue<State<T> *, vector<State<T> *>, MyComperator> temp = open_priority_queue;
     while (!temp.empty()) {
       State<T> *state2 = temp.top();

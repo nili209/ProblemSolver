@@ -13,22 +13,18 @@
 template<typename T, typename Solution>
 //T = Point
 class DFS : public MySearcher<T, Solution> {
- private:
-  stack<State<T> *> my_stack;
  public:
   /**
    * Given a Searchable, the function returns the a path from it's initial state to it's goal state.
    * Using the algorithm of Best First Search.
    */
   Solution search(Searchable<T> *searchable) {
-    stack<State<T> *> temp;
-    my_stack = temp;
+    vector<State<T>*> closed;
+    stack<State<T> *> my_stack;
     State<T> *init_state = searchable->getInitialState();
     State<T> *goal_state = searchable->getGoalState();
     my_stack.push(init_state);
-    vector<State<T>*> c;
-    this->closed = c;
-    this->addToClosed(init_state);
+    closed.push_back(init_state);
     while (!my_stack.empty()) {
       State<T> *current_state = my_stack.top();
       my_stack.pop();
@@ -40,8 +36,8 @@ class DFS : public MySearcher<T, Solution> {
       }
       vector<State<T> *> neighbors = searchable->getAllPossibleStates(current_state);
       for (State<T> *neighbor : neighbors) {
-        if (!this->isClosedContain(neighbor)) {
-          this->addToClosed(neighbor);
+        if (!this->isClosedContain(neighbor, closed)) {
+          closed.push_back(neighbor);
           neighbor->setComeFrom(current_state);
           my_stack.push(neighbor);
         }

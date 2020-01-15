@@ -5,8 +5,9 @@
 #include <netinet/in.h>
 #include <iostream>
 #include <stack>
-#define TIME_OUT 10
+#define TIME_OUT 100
 #include "MyParallelServer.h"
+mutex mutex_lock;
 struct threadData {
   int socket;
   ClientHandler *client_handler_thread;

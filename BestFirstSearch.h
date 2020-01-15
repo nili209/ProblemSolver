@@ -17,26 +17,22 @@ class BestFirstSearch : public MySearcher<T, Solution> {
       return (left->getTrailCost()) > (right->getTrailCost());
     }
   };
- private:
-  priority_queue<State<T>*, vector<State<T>*>, MyComperator> open_priority_queue;
  public:
   /**
    * Given a Searchable, the function returns the cheapest path from it's initial state to it's goal state.
    * Using the algorithm of Best First Search.
    */
   Solution search(Searchable<T> *searchable) {
-    priority_queue<State<T> *, vector<State<T> *>, MyComperator> temp;
-    open_priority_queue = temp;
+    priority_queue<State<T>*, vector<State<T>*>, MyComperator> open_priority_queue;
     State<T>* init_state = searchable->getInitialState();
     State<T>* goal_state = searchable->getGoalState();
     open_priority_queue.push(init_state);
-    vector<State<T>*> c;
-    this->closed = c;
+    vector<State<T>*> closed;
     while (!open_priority_queue.empty()) {
       //pop the lowest trial cost state from open queue.
       State<T>* current_state = open_priority_queue.top();
       open_priority_queue.pop();
-      this->addToClosed(current_state);
+      closed.push_back(current_state);
       this->setNumberOfNodesEvaluated(1);
       //this is the goal state.
       if (current_state->Equals(searchable->getGoalState())) {
@@ -47,7 +43,7 @@ class BestFirstSearch : public MySearcher<T, Solution> {
       vector<State<T>*> neighbors = searchable->getAllPossibleStates(current_state);
       for(State<T>* neighbor : neighbors) {
         //we did not reached to this state until now or we already done evaluating it.
-        if (!this->isClosedContain(neighbor) && !isOpenContain(neighbor)) {
+        if (!this->isClosedContain(neighbor, closed) && !isOpenContain(neighbor, open_priority_queue)) {
           neighbor->setComeFrom(current_state);
           open_priority_queue.push(neighbor);
         } else {
@@ -55,7 +51,7 @@ class BestFirstSearch : public MySearcher<T, Solution> {
           double curr_trial = current_state->getTrailCost() + neighbor->getCost();
           //the current path is better.
           if (curr_trial < prev_trial) {
-            if (!isOpenContain(neighbor)) {
+            if (!isOpenContain(neighbor,open_priority_queue)) {
               open_priority_queue.push(neighbor);
             } else {
               //update the trial cost to the lower trial cost.
@@ -85,7 +81,7 @@ class BestFirstSearch : public MySearcher<T, Solution> {
   /**
  * Given a State, the function returns true if open priority queue  contains it and false otherwise.
  */
-  bool isOpenContain(State<T> *state1) {
+  bool isOpenContain(State<T> *state1, priority_queue<State<T>*, vector<State<T>*>, MyComperator> open_priority_queue) {
     priority_queue<State<T>*, vector<State<T>*>, MyComperator> temp = open_priority_queue;
     while (!temp.empty()) {
         State<T>* state2 = temp.top();

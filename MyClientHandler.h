@@ -19,12 +19,11 @@
 #include <mutex>
 #define LINE_SIZE 1024
 #define END_OF_MESSAGE 'e'
-
 template<typename Problem, typename Solution>
 class MyClientHandler : public ClientHandler {
  private:
   CacheManager<Problem, Solution> *cache_manager;
-  string problem = "";
+  //string problem = "";
   Solver<Problem, Solution> *solver;
  public:
   /**
@@ -39,7 +38,7 @@ class MyClientHandler : public ClientHandler {
     const char *solution;
     string s = "";
     //just read into a buffer of string problem
-    initProblem(client_socket);
+    string problem = initProblem(client_socket);
     //checks if the problem is already solved
     if (cache_manager->isSolved(problem)) {
       s = cache_manager->getSolution(problem);
@@ -47,7 +46,7 @@ class MyClientHandler : public ClientHandler {
     } else {
       s = solver->solve(problem);
       solution = s.c_str();
-      cache_manager->saveSolution(solution, problem);
+      //cache_manager->saveSolution(solution, problem);
     }
     int is_sent = send(client_socket, solution, strlen(solution), 0);
     solution = "";
@@ -60,15 +59,17 @@ class MyClientHandler : public ClientHandler {
   /**
    * The function initializes the problem.
    */
-  void initProblem(int client_socket_in) {
-    problem = "";
+  string initProblem(int client_socket_in) {
+    string problem = "";
+    char buffer[LINE_SIZE] = {0};
+     buffer[LINE_SIZE] = {0};
     while (true) {
-      char buffer[LINE_SIZE] = {0};
+       buffer[LINE_SIZE] = {0};
       int valread = read(client_socket_in, buffer, LINE_SIZE);
       int i = 0;
       while (i < valread) {
         if (buffer[i] == END_OF_MESSAGE) {
-          return;
+          return problem;
         }
         if (buffer[i] == '\n') {
           problem += ";";

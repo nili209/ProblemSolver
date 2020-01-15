@@ -13,7 +13,6 @@ class MySearcher : public Searcher<T, Solution> {
   int number_of_nodes_evaluated = 0;
   Solution solution;
  protected:
-  vector<State<T>*> closed;
   /**
    * Given a number, the function add the number to number of nodes evaluated.
    */
@@ -50,15 +49,9 @@ class MySearcher : public Searcher<T, Solution> {
     return backTrace(state->getComeFrom(), init, goal);
   }
   /**
-   * The function inserts a new state to closed.
-   */
-  void addToClosed(State<T>* s) {
-    closed.push_back(s);
-  }
-  /**
    * The function checks if a state is in closed.
    */
-  bool isClosedContain(State<T> *s) {
+  bool isClosedContain(State<T> *s, vector<State<T>*> closed) {
     for (State<T>* n : closed) {
       if (s->Equals(n)) {
         return true;
