@@ -19,7 +19,6 @@ class State {
   double cost;
   double trail_cost;
   State<T> *come_from;
-  bool is_visited = false;
   double heuristic = FLT_MAX;
  public:
   /**
@@ -32,12 +31,7 @@ class State {
   bool Equals(State<T>* s) {
     return state == s->state;
   }
-  void setVisited(bool value) {
-    is_visited = value;
-  }
-  bool isVisited() {
-    return is_visited;
-  }
+
   double gerHeuristic() {
     return heuristic;
   }
