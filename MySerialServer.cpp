@@ -5,6 +5,9 @@
 #include "MySerialServer.h"
 #define TIME_OUT 3
 static int socketfd;
+/**
+ * The function start the server socket and bind.
+ */
 void MySerialServer::start(int port, ClientHandler *client_handler) {
   //open socket
   sockaddr_in address;
@@ -20,10 +23,12 @@ void MySerialServer::start(int port, ClientHandler *client_handler) {
     cerr << "Could not bind the socket to an IP" << endl;
     exit(1);
   }
-
   //while loop accepting and handeling clients serialy.
   dealWithClients(client_handler, socketfd, address);
 }
+/**
+ * The function listen and accept a client in a loop until the time is up.
+ */
 void MySerialServer::dealWithClients(ClientHandler *client_handler, int socketfd, sockaddr_in &address) {
   while (true) {
     if (listen(socketfd, 5) == -1) {
@@ -41,6 +46,7 @@ void MySerialServer::dealWithClients(ClientHandler *client_handler, int socketfd
     FD_SET(client_socket_in, &rfds);
     int recVal = 0;
     tv.tv_sec = TIME_OUT;
+    //checks timeout
     recVal = select(client_socket_in + 1, &rfds, NULL, NULL, &tv);
     switch (recVal) {
       //timeout
@@ -59,11 +65,17 @@ void MySerialServer::dealWithClients(ClientHandler *client_handler, int socketfd
     close(client_socket_in);
   }
 }
+/**
+ * The function opens a server socket on a new thread.
+ */
 void MySerialServer::open(int port, ClientHandler *client_handler) {
   thread thread_1(start, port, client_handler);
   thread_1.join();
   stop();
 }
+/**
+ * The function closes the server socket.
+ */
 void MySerialServer::stop() {
   cout<<"closing the server socket"<<endl;
   close(socketfd);

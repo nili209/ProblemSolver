@@ -24,7 +24,7 @@ class MyTestClientHandler : public ClientHandler {
   MyTestClientHandler(Solver<Problem, Solution> *solver1, CacheManager<string, Solution> *cache_manager1) :
       solver(solver1), cache_manager(cache_manager1) {}
       /**
-       * Given a socket of client, the function read data from the client and sends to the client the solution.
+       * Given a socket of client, the function reads data from the client and sends to the client the solution.
        */
   virtual void handleClient(int client_socket) {
     string problem = "", line = "";

@@ -19,6 +19,12 @@ class FileCacheManager : public CacheManager<string, Solution> {
   list<string> file_name;
   //<problem, problem_name>
   unordered_map<string, string> problem_map;
+  /**
+   * Given a problem and an object, the function checks if the solution
+   * to this problem already saved in the cache or files.
+   * If so, the function reads the solution into the obj.
+   * In this assignment the soltuion is string so the reading is spesoficly for strings.
+   */
   void search_key_in_file(string &problem, Solution &obj) {
     ifstream is;
     hash < string > hasher;
@@ -40,6 +46,9 @@ class FileCacheManager : public CacheManager<string, Solution> {
     is.close();
     return;
   }
+  /**
+   * Given a problem and solution, the funciton inserts the solution to the cache.
+   */
   void insert(string problem, Solution obj) {
     write_to_file(problem, obj);
     //check if key exist in the cache, if so - update it. else - add it to the cache
@@ -64,6 +73,10 @@ class FileCacheManager : public CacheManager<string, Solution> {
       cache.insert({problem, {obj, lru.begin()}});
     }
   }
+  /**
+   * Given a problem and solution, the funciton write the solution into a binary file.
+   * In this assignment the solution is string so the writing is done specoficly for string type.
+   */
   void write_to_file(string problem, Solution &obj) {
     string problem_name;
     auto item = problem_map.find(problem);
@@ -77,7 +90,7 @@ class FileCacheManager : public CacheManager<string, Solution> {
       problem_map.insert({problem, problem_name});
     }
     ofstream outf;
-    outf.open(problem_name, ios::out | ios::binary);// | ios::trunc);
+    outf.open(problem_name, ios::out | ios::binary);
     if (!outf.is_open()) {
       throw "error opening the file";
     }
@@ -87,6 +100,9 @@ class FileCacheManager : public CacheManager<string, Solution> {
     //outf.write((char*)(&obj), sizeof(obj));
     outf.close();
   }
+  /**
+ * Given a problem, the function returns it's solution.
+ */
   Solution get(string problem) {
     Solution value;
     //searching for the key in the cache
@@ -104,11 +120,17 @@ class FileCacheManager : public CacheManager<string, Solution> {
     }
     return value;
   }
+  /**
+   * The function updates the lru.
+   */
   void use_update(typename unordered_map<string, pair<Solution, list<string>::iterator>>::iterator &it) {
     lru.erase(it->second.second);
     lru.push_front(it->first);
     it->second.second = lru.begin();
   }
+  /**
+   * Given a function, the function activates the function on each object of the cache.
+   */
   template<typename Printer>
   void foreach(Printer pFunction) {
     for (auto it = lru.begin(); it != lru.end(); ++it) {

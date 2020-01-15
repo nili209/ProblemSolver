@@ -11,12 +11,18 @@ struct threadData {
   int socket;
   ClientHandler *client_handler_thread;
 };
+/**
+ * The function activate the next thread to handle it's client.
+ */
 void *startThreadClient(void *param) {
   auto data = (threadData *) param;
   data->client_handler_thread->handleClient(data->socket);
   delete data;
 }
 static int socketfd;
+/**
+ * The function opens the server socket and bind and listen.
+ */
 void MyParallelServer::open(int port, ClientHandler *client_handler) {
   sockaddr_in address;
   socketfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -39,6 +45,9 @@ void MyParallelServer::open(int port, ClientHandler *client_handler) {
   }
   start(socketfd, client_handler, address);
 }
+/**
+ * The function listen and accept multiple clients in a loop until the time is up.
+ */
 void MyParallelServer::start(int socketfd, ClientHandler *client_handler, sockaddr_in address) {
   while (true) {
     struct timeval tv;
@@ -50,6 +59,7 @@ void MyParallelServer::start(int socketfd, ClientHandler *client_handler, sockad
     int recVal = 0;
     tv.tv_sec = TIME_OUT;
     setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char *) &tv, sizeof tv);
+    //checks timeout
     recVal = select(client_socket_in + 1, &rfds, NULL, NULL, &tv);
     if (client_socket_in < 0) {
       if (errno == EWOULDBLOCK || errno == EAGAIN) {
@@ -72,9 +82,13 @@ void MyParallelServer::start(int socketfd, ClientHandler *client_handler, sockad
     threads_stack.push(trid);
   }
 }
+/**
+ * The function finish activating the threads and closes the server socket.
+ */
 void MyParallelServer::stop() {
   while (!threads_stack.empty()) {
     pthread_join(threads_stack.top(), nullptr);
     threads_stack.pop();
   }
+  close(socketfd);
 }
