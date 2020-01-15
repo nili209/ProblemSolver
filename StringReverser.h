@@ -4,7 +4,6 @@
 
 #ifndef EX4_STRINGREVERSER_H
 #define EX4_STRINGREVERSER_H
-
 #include "Solver.h"
 #include <string>
 
