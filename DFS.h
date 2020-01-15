@@ -21,9 +21,13 @@ class DFS : public MySearcher<T, Solution> {
    * Using the algorithm of Best First Search.
    */
   Solution search(Searchable<T> *searchable) {
+    stack<State<T> *> temp;
+    my_stack = temp;
     State<T> *init_state = searchable->getInitialState();
     State<T> *goal_state = searchable->getGoalState();
     my_stack.push(init_state);
+    vector<State<T>*> c;
+    this->closed = c;
     this->addToClosed(init_state);
     while (!my_stack.empty()) {
       State<T> *current_state = my_stack.top();

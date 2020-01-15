@@ -25,6 +25,8 @@ class AStar : public MySearcher<T, Solution> {
    * Using the algorithm of AStar.
    */
   Solution search(Searchable<T> *searchable) {
+    priority_queue<State<T> *, vector<State<T> *>, MyComperator> temp;
+    open_priority_queue = temp;
     State<T> *init_state = searchable->getInitialState();
     State<T> *goal_state = searchable->getGoalState();
     open_priority_queue.push(init_state);

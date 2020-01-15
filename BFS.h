@@ -19,9 +19,13 @@ class BFS : public MySearcher<T, Solution> {
    * Using the algorithm of BFS.
    */
   Solution search(Searchable<T> *searchable) {
+    queue<State<T> *> temp;
+    my_queue = temp;
     State<T>* init_state = searchable->getInitialState();
     State<T>* goal_state = searchable->getGoalState();
     my_queue.push(init_state);
+    vector<State<T>*> c;
+    this->closed = c;
     this->addToClosed(init_state);
     while(!my_queue.empty()) {
       State<T>* current_state = my_queue.front();

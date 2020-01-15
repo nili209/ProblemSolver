@@ -25,9 +25,13 @@ class BestFirstSearch : public MySearcher<T, Solution> {
    * Using the algorithm of Best First Search.
    */
   Solution search(Searchable<T> *searchable) {
+    priority_queue<State<T> *, vector<State<T> *>, MyComperator> temp;
+    open_priority_queue = temp;
     State<T>* init_state = searchable->getInitialState();
     State<T>* goal_state = searchable->getGoalState();
     open_priority_queue.push(init_state);
+    vector<State<T>*> c;
+    this->closed = c;
     while (!open_priority_queue.empty()) {
       //pop the lowest trial cost state from open queue.
       State<T>* current_state = open_priority_queue.top();

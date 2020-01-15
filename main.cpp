@@ -98,36 +98,36 @@ class Main {
     string s2 = searcher3->search(matrix3);
     std::cout << "test3: " << s2 << endl << "number of nodes = " << searcher3->getNumberOfNodesEvaluated()
               << endl;
-    string problem1 = "1,2;3,4;0,0;1,1;end";
-    string problem2 = "1,4;7,1;0,10;0;0;2;1";
-    string problem3 = "1,8,10;9,1000,8;10,0,2;0;0;2;2";
-    CacheManager<string, string> *my_cache = new FileCacheManager<string>(0);
-    cout << my_cache->isSolved(problem1) << endl;
-    my_cache->saveSolution(s1, problem1);
-    cout << my_cache->isSolved(problem1) << endl;
-    cout << my_cache->getSolution(problem1) << endl;
-    /****
-     *
-     */
-    cout << my_cache->isSolved(problem2) << endl;
-    my_cache->saveSolution(s, problem2);
-    cout << my_cache->isSolved(problem2) << endl;
-    cout << my_cache->getSolution(problem2) << endl;
-    cout << my_cache->isSolved(problem2) << endl;
-    /****
-     *
-     */
-    cout << my_cache->isSolved(problem3) << endl;
-    my_cache->saveSolution(s2, problem3);
-    cout << my_cache->isSolved(problem3) << endl;
-    cout << my_cache->getSolution(problem3) << endl;
-
-    cout << my_cache->getSolution(problem1) << endl;
-    string trying = "shiraz";
-    string prob = "prob";
-    my_cache->saveSolution(trying, prob);
-    cout << my_cache->getSolution(problem3) << endl;
-    cout << my_cache->getSolution(prob) << endl;
+//    string problem1 = "1,2;3,4;0,0;1,1;end";
+//    string problem2 = "1,4;7,1;0,10;0;0;2;1";
+//    string problem3 = "1,8,10;9,1000,8;10,0,2;0;0;2;2";
+//    CacheManager<string, string> *my_cache = new FileCacheManager<string>(0);
+//    cout << my_cache->isSolved(problem1) << endl;
+//    my_cache->saveSolution(s1, problem1);
+//    cout << my_cache->isSolved(problem1) << endl;
+//    cout << my_cache->getSolution(problem1) << endl;
+//    /****
+//     *
+//     */
+//    cout << my_cache->isSolved(problem2) << endl;
+//    my_cache->saveSolution(s, problem2);
+//    cout << my_cache->isSolved(problem2) << endl;
+//    cout << my_cache->getSolution(problem2) << endl;
+//    cout << my_cache->isSolved(problem2) << endl;
+//    /****
+//     *
+//     */
+//    cout << my_cache->isSolved(problem3) << endl;
+//    my_cache->saveSolution(s2, problem3);
+//    cout << my_cache->isSolved(problem3) << endl;
+//    cout << my_cache->getSolution(problem3) << endl;
+//
+//    cout << my_cache->getSolution(problem1) << endl;
+//    string trying = "shiraz";
+//    string prob = "prob";
+//    my_cache->saveSolution(trying, prob);
+//    cout << my_cache->getSolution(problem3) << endl;
+//    cout << my_cache->getSolution(prob) << endl;
     ///General initialization
     CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
     //server_side::Server *server1 = new MyParallelServer();
@@ -148,15 +148,15 @@ class Main {
 //    ClientHandler *c_BFS = new MyClientHandler<string, string>(matrix_solver_BFS, my_cache3);
 //    server1->open(port, c_BFS);
 //    ///DFS
-//    Searcher<Point, string> *searcher_DFS(new DFS<Point, string>);
-//    Solver<string, string> *matrix_solver_DFS = new SearchSolver<Point, string>(searcher_DFS);
-//    ClientHandler *c_DFS = new MyClientHandler<string, string>(matrix_solver_DFS, my_cache3);
-//    server1->open(port, c_DFS);
+    Searcher<Point, string> *searcher_DFS(new DFS<Point, string>);
+    Solver<string, string> *matrix_solver_DFS = new SearchSolver<Point, string>(searcher_DFS);
+    ClientHandler *c_DFS = new MyClientHandler<string, string>(matrix_solver_DFS, my_cache3);
+    server1->open(port, c_DFS);
     ///AStar
-    Searcher<Point, string> *searcher_AStar(new AStar<Point, string>);
-    Solver<string, string> *matrix_solver_AStar = new SearchSolver<Point, string>(searcher_AStar);
-    ClientHandler *c_AStar = new MyClientHandler<string, string>(matrix_solver_AStar, my_cache3);
-    server1->open(port, c_AStar);
+//    Searcher<Point, string> *searcher_AStar(new AStar<Point, string>);
+//    Solver<string, string> *matrix_solver_AStar = new SearchSolver<Point, string>(searcher_AStar);
+//    ClientHandler *c_AStar = new MyClientHandler<string, string>(matrix_solver_AStar, my_cache3);
+//    server1->open(port, c_AStar);
   }
 };
 }
