@@ -31,10 +31,15 @@ class State {
   bool Equals(State<T>* s) {
     return state == s->state;
   }
-
+/**
+ * Getter for heuristic.
+ */
   double gerHeuristic() {
     return heuristic;
   }
+  /**
+   * Given a value, the function updates the heuristic field.
+   */
   void setHeuristic(double value) {
     heuristic = value;
   }

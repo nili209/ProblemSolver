@@ -21,7 +21,6 @@ class DFS : public MySearcher<T, Solution> {
     State<T> *goal_state = searchable->getGoalState();
     my_stack.push(init_state);
     this->addToClosed(init_state);
-    //init_state->setVisited(true);
     while (!my_stack.empty()) {
       State<T> *current_state = my_stack.top();
       my_stack.pop();
@@ -35,7 +34,6 @@ class DFS : public MySearcher<T, Solution> {
       for (State<T> *neighbor : neighbors) {
         if (!this->isClosedContain(neighbor)) {
           this->addToClosed(neighbor);
-          //neighbor->setVisited(true);
           neighbor->setComeFrom(current_state);
           my_stack.push(neighbor);
         }

@@ -10,7 +10,6 @@ using namespace std;
 template <class Problem, class Solution>
  class Solver {
  public:
-     //Probelm = string
      virtual Solution solve(Problem problem) = 0;
      virtual ~Solver() = default;
  };

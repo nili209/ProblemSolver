@@ -71,9 +71,7 @@ void MyParallelServer::start(int socketfd, ClientHandler *client_handler, sockad
     }
     threads_stack.push(trid);
   }
-
 }
-
 void MyParallelServer::stop() {
   while (!threads_stack.empty()) {
     pthread_join(threads_stack.top(), nullptr);

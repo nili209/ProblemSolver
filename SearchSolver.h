@@ -4,13 +4,10 @@
 
 #ifndef EX4_SEARCHSOLVER_H
 #define EX4_SEARCHSOLVER_H
-
 #include "Solver.h"
 #include "Searcher.h"
-
 #define END_OF_LINE ';'
 
-//T = Point
 template<typename T, class Solution>
 class SearchSolver : public Solver<string, Solution> {
  private:
@@ -33,6 +30,7 @@ class SearchSolver : public Solver<string, Solution> {
     char current_char = problem[i];
     string data = "";
     int number_of_lines = initNumberOfLines(problem);
+    //read from buffer until we get to the two last rows that contains the start and end point.
     while (number_of_rows < number_of_lines - 2) {
       while (current_char != END_OF_LINE) {
         if (current_char == ',') {
@@ -95,7 +93,9 @@ class SearchSolver : public Solver<string, Solution> {
     }
     return 0;
   }
-
+  /**
+   * Given values of start point and end point, the function creates a matrix.
+   */
   void createMatrix(int row_in, int col_in, int row_out, int col_out) {
     double initial_cost = getCost(row_in, col_in);
     double goal_cost = getCost(row_out, col_out);
@@ -103,7 +103,9 @@ class SearchSolver : public Solver<string, Solution> {
     State<Point> *goal_state = createState(goal_cost, false, row_out, col_out);
     matrix = new Matrix(initial_state, goal_state, structure);
   }
-
+  /**
+   * The function creates a new state and add it to structure if neccesary.
+   */
   State<Point> *createState(double value, bool to_push, int row, int col) {
     Point *point = new Point(row, col);
     State<Point> *state = new State<Point>(*point, value);
@@ -112,7 +114,9 @@ class SearchSolver : public Solver<string, Solution> {
     }
     return state;
   }
-
+  /**
+   * Given a problem function counts the number of lines the problem has and returns it.
+   */
   int initNumberOfLines(string problem) {
     int i, length = problem.length(), number_of_lines = 0;
     for (i = 0; i < length; i++) {
@@ -122,20 +126,19 @@ class SearchSolver : public Solver<string, Solution> {
     }
     return number_of_lines;
   }
-
+  /**
+   * Given a problem the function returns it's solution.
+   */
   virtual Solution solve(string problem) {
     initMatrix(problem);
     return my_searcher->search(matrix);
   }
-
 /**
 * Destructor.
 */
-  virtual ~
-  SearchSolver() {
+  virtual ~SearchSolver() {
     delete my_searcher;
   }
-
 };
 
 #endif //EX4_SEARCHSOLVER_H
