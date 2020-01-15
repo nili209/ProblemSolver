@@ -4,7 +4,9 @@
 
 #ifndef EX4_SERVER_H
 #define EX4_SERVER_H
-
+#include <sstream>
+#include <unistd.h>
+#include <mutex>
 #include "ClientHandler.h"
 
 using namespace std;

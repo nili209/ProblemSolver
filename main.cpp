@@ -10,6 +10,7 @@
 #include "MyTestClientHandler.h"
 #include "MyClientHandler.h"
 #include "MySerialServer.h"
+#include "MyParallelServer.h"
 #include "BFS.h"
 #include "DFS.h"
 #include "AStar.h"
@@ -129,7 +130,8 @@ class Main {
     cout << my_cache->getSolution(prob) << endl;
     ///General initialization
     CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
-    server_side::Server *server1 = new MySerialServer();
+    server_side::Server *server1 = new MyParallelServer();
+    //server_side::Server *server1 = new MySerialServer();
     ///string reverser
 //
 //    Solver<string, string> *string_reverser = new StringReverser();

@@ -8,6 +8,6 @@
 using namespace std;
 class ClientHandler {
 public:
-    virtual void handleClient(int client_socket_in, int client_socket_out) = 0;
+    virtual void handleClient(int client_socket_in) = 0;
 };
 #endif //EX4_CLIENTHANDLER_H

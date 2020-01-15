@@ -1,9 +1,7 @@
 //
 // Created by nili  and shiraz on 1/8/20.
 //
-#include <sstream>
-#include <unistd.h>
-#include <mutex>
+
 #include "MySerialServer.h"
 #define TIME_OUT 3
 static int socketfd;
@@ -22,6 +20,7 @@ void MySerialServer::start(int port, ClientHandler *client_handler) {
     cerr << "Could not bind the socket to an IP" << endl;
     exit(1);
   }
+
   //while loop accepting and handeling clients serialy.
   dealWithClients(client_handler, socketfd, address);
 }
@@ -33,11 +32,9 @@ void MySerialServer::dealWithClients(ClientHandler *client_handler, int socketfd
     } else {
       cout << "Server is now listening..." << endl;
     }
-    cout << "nili" << endl;
     struct timeval tv;
     setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
-    int client_socket_in = accept(socketfd, (struct sockaddr *) &address,
-                                  (socklen_t *) &address);
+    int client_socket_in = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
     fd_set rfds;
     tv.tv_usec = 0.0;
     FD_ZERO(&rfds);
@@ -58,8 +55,7 @@ void MySerialServer::dealWithClients(ClientHandler *client_handler, int socketfd
         break;
       }
     }
-    cout << "shiraz" << endl;
-    client_handler->handleClient(client_socket_in, client_socket_in);
+    client_handler->handleClient(client_socket_in);
     close(client_socket_in);
   }
 }

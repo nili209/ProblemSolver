@@ -12,15 +12,13 @@
 #include <iostream>
 
 using namespace server_side;
-
 class MySerialServer : public Server {
  public:
   virtual void open(int port, ClientHandler *client_handler);
   virtual void stop();
   static void start(int port, ClientHandler *client_handler);
-  virtual ~MySerialServer() = default;
-
   static void dealWithClients(ClientHandler *client_handler, int socketfd, sockaddr_in &address);
+  virtual ~MySerialServer() = default;
 };
 
 #endif //EX4_MYSERIALSERVER_H

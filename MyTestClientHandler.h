@@ -22,8 +22,8 @@ class MyTestClientHandler : public ClientHandler {
  public:
   MyTestClientHandler(Solver<Problem, Solution> *solver1, CacheManager<string, Solution> *cache_manager1) :
       solver(solver1), cache_manager(cache_manager1) {}
-  virtual void handleClient(int client_socket_in, int client_socket_out) {
-    myTestClientHandler(client_socket_in);
+  virtual void handleClient(int client_socket) {
+    myTestClientHandler(client_socket);
   }
   void myTestClientHandler(int client_socket_in) {
     string problem = "", line = "";

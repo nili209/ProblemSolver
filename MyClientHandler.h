@@ -27,11 +27,11 @@ class MyClientHandler : public ClientHandler {
  public:
   MyClientHandler(Solver<Problem, string> *solver1, CacheManager<Problem, Solution> *cache_menager1) :
   solver(solver1), cache_manager(cache_menager1) {}
-  virtual void handleClient(int client_socket_in, int client_socket_out) {
+  virtual void handleClient(int client_socket) {
     const char *solution;
     string s = "";
     //just read into a buffer of string problem
-    initProblem(client_socket_in);
+    initProblem(client_socket);
     if (cache_manager->isSolved(problem)) {
       s = cache_manager->getSolution(problem);
       solution = s.c_str();
@@ -40,7 +40,7 @@ class MyClientHandler : public ClientHandler {
       solution = s.c_str();
       cache_manager->saveSolution(solution, problem);
     }
-    int is_sent = send(client_socket_out, solution, strlen(solution), 0);
+    int is_sent = send(client_socket, solution, strlen(solution), 0);
     if (is_sent == -1) {
       cout << "Error sending message" << endl;
       exit(1);
