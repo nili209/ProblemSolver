@@ -16,8 +16,10 @@
 #include "FileCacheManager.h"
 #include <string>
 #include <cstring>
+#include <mutex>
 #define LINE_SIZE 1024
 #define END_OF_MESSAGE 'e'
+
 template<typename Problem, typename Solution>
 class MyClientHandler : public ClientHandler {
  private:
@@ -43,11 +45,12 @@ class MyClientHandler : public ClientHandler {
       s = cache_manager->getSolution(problem);
       solution = s.c_str();
     } else {
-      s= solver->solve(problem);
+      s = solver->solve(problem);
       solution = s.c_str();
-      cache_manager->saveSolution(solution, problem);
+      //cache_manager->saveSolution(solution, problem);
     }
     int is_sent = send(client_socket, solution, strlen(solution), 0);
+    solution = "";
     if (is_sent == -1) {
       cout << "Error sending message" << endl;
       exit(1);
@@ -58,6 +61,7 @@ class MyClientHandler : public ClientHandler {
    * The function initializes the problem.
    */
   void initProblem(int client_socket_in) {
+    problem = "";
     while (true) {
       char buffer[LINE_SIZE] = {0};
       int valread = read(client_socket_in, buffer, LINE_SIZE);

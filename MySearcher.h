@@ -14,8 +14,17 @@ class MySearcher : public Searcher<T, Solution> {
   Solution solution;
  protected:
   vector<State<T>*> closed;
+  /**
+   * Given a number, the function add the number to number of nodes evaluated.
+   */
   void setNumberOfNodesEvaluated(int num) {
     number_of_nodes_evaluated += num;
+  }
+  /**
+   * Reset number os nodes evaluated.
+   */
+  void clearNumberOfNodesEvaluated() {
+    number_of_nodes_evaluated = 0;
   }
   /**
  * Given a state, goal state and init state, the function returns the
@@ -24,9 +33,13 @@ class MySearcher : public Searcher<T, Solution> {
  * need just to change the inner implementation of this function.
  */
   Solution backTrace(State<T> *state, State<T> *init, State<T> *goal) {
+    string s = "";
     if (state->Equals(init)) {
       cout<<"Number of nodes evaluated: "<< number_of_nodes_evaluated <<endl;
-      return solution;
+      number_of_nodes_evaluated = 0;
+      s = solution;
+      solution = "";
+      return s;
     }
     //up, down, right or left.
     string direction = state->getDirection();

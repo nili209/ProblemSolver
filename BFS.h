@@ -41,6 +41,7 @@ class BFS : public MySearcher<T, Solution> {
         }
       }
     }
+    this->clearNumberOfNodesEvaluated();
     return NO_PATH;
   }
   /**

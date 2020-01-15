@@ -20,7 +20,7 @@ class MyParallelServer : public Server {
   virtual void open(int port, ClientHandler *client_handler);
   virtual void stop();
   void start(int socketfd, ClientHandler *client_handler, sockaddr_in address);
-  virtual ~MyParallelServer(){delete info};
+  virtual ~MyParallelServer();
 };
 
 #endif //EX4_MYPARALLELSERVER_H

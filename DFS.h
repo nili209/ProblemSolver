@@ -43,6 +43,7 @@ class DFS : public MySearcher<T, Solution> {
         }
       }
     }
+    this->clearNumberOfNodesEvaluated();
     return NO_PATH;
   }
   /**

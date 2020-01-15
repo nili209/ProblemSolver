@@ -28,6 +28,8 @@ class AStar : public MySearcher<T, Solution> {
     State<T> *init_state = searchable->getInitialState();
     State<T> *goal_state = searchable->getGoalState();
     open_priority_queue.push(init_state);
+    vector<State<T>*> c;
+    this->closed = c;
     while (!this->open_priority_queue.empty()) {
       State<T> *current_state = this->open_priority_queue.top();
       open_priority_queue.pop();
@@ -57,6 +59,7 @@ class AStar : public MySearcher<T, Solution> {
         }
       }
     }
+    this->clearNumberOfNodesEvaluated();
     return NO_PATH;
   }
   /**

@@ -92,3 +92,6 @@ void MyParallelServer::stop() {
   }
   close(socketfd);
 }
+MyParallelServer::~MyParallelServer() {
+  delete info;
+}

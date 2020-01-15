@@ -3,7 +3,7 @@
 //
 
 #include "MySerialServer.h"
-#define TIME_OUT 3
+#define TIME_OUT 10
 static int socketfd;
 /**
  * The function start the server socket and bind.

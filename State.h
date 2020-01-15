@@ -16,8 +16,8 @@ template<typename T>
 class State {
  private:
   T state;
-  double cost;
-  double trail_cost;
+  double cost = 0;
+  double trail_cost = 0;
   State<T> *come_from;
   double heuristic = FLT_MAX;
  public:

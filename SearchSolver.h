@@ -27,6 +27,12 @@ class SearchSolver : public Solver<string, Solution> {
    */
   void initMatrix(string problem) {
     int i = 0;
+    int number_of_rows = 0;
+    int number_of_cols = 0;
+    Searchable<T>* m;
+    matrix = m;
+    vector<State<T> *> v;
+    structure = v;
     char current_char = problem[i];
     string data = "";
     int number_of_lines = initNumberOfLines(problem);
