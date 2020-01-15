@@ -43,6 +43,10 @@ class BFS : public MySearcher<T, Solution> {
     }
     return NO_PATH;
   }
+  /**
+   * Destructor.
+   */
+  virtual ~BFS() = default;
 };
 
 #endif //EX4__BFS_H_

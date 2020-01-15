@@ -21,7 +21,7 @@ class AStar : public MySearcher<T, Solution> {
   priority_queue<State<T> *, vector<State<T> *>, MyComperator> open_priority_queue;
  public:
   /**
-   * Given a Searchable, the function returns the shortest path from it's initial state to it's goal state.
+   * Given a Searchable, the function returns a path from it's initial state to it's goal state.
    * Using the algorithm of AStar.
    */
   Solution search(Searchable<T> *searchable) {
@@ -59,11 +59,17 @@ class AStar : public MySearcher<T, Solution> {
     }
     return NO_PATH;
   }
+  /**
+  * The function calculates the heuristic value and updates it.
+  */
   void setHeuristic(State<T>* neighbor, State<T>* goal_state) {
     int x_neighbor = neighbor->getState().getX(), y_neighbor = neighbor->getState().getY(),
     x_goal = goal_state->getState().getX(), y_goal = goal_state->getState().getY();
     neighbor->setHeuristic(abs(x_goal - x_neighbor) + abs(y_goal - y_neighbor));
   }
+  /**
+  * The function updates the open priority queue.
+  */
   priority_queue<State<T>*, vector<State<T> *>, MyComperator> updatePriorityQ(priority_queue<State<T> *,
                                                                                              vector<State<T> *>, MyComperator> prev_priority_queue){
     priority_queue<State<T> *, vector<State<T> *>, MyComperator> newQ;
@@ -86,6 +92,9 @@ class AStar : public MySearcher<T, Solution> {
       temp.pop();
     }
     return false;
-  }
+  }/**
+   * Destructor.
+   */
+  virtual ~AStar() = default;
 };
 #endif //EX4__ASTAR_H_

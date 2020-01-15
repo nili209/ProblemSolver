@@ -36,9 +36,15 @@ class MySearcher : public Searcher<T, Solution> {
     }
     return backTrace(state->getComeFrom(), init, goal);
   }
+  /**
+   * The function inserts a new state to closed.
+   */
   void addToClosed(State<T>* s) {
     closed.push_back(s);
   }
+  /**
+   * The function checks if a state is in closed.
+   */
   bool isClosedContain(State<T> *s) {
     for (State<T>* n : closed) {
       if (s->Equals(n)) {
@@ -49,9 +55,15 @@ class MySearcher : public Searcher<T, Solution> {
   }
  public:
   virtual Solution search(Searchable<T> *searchable) = 0;
+  /**
+   * The function returns the number of nodes evaluated.
+   */
   int getNumberOfNodesEvaluated() {
     return number_of_nodes_evaluated;
   }
+  /**
+   * Destructor.
+   */
   virtual ~MySearcher() = default;
 };
 #endif //EX4_MYSEARCHER_H

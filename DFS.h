@@ -16,6 +16,10 @@ class DFS : public MySearcher<T, Solution> {
  private:
   stack<State<T> *> my_stack;
  public:
+  /**
+   * Given a Searchable, the function returns the a path from it's initial state to it's goal state.
+   * Using the algorithm of Best First Search.
+   */
   Solution search(Searchable<T> *searchable) {
     State<T> *init_state = searchable->getInitialState();
     State<T> *goal_state = searchable->getGoalState();
@@ -41,6 +45,10 @@ class DFS : public MySearcher<T, Solution> {
     }
     return NO_PATH;
   }
+  /**
+   * Destructor.
+   */
+  virtual ~DFS() = default;
 };
 
 #endif //EX4_DFS_H

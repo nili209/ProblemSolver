@@ -38,7 +38,7 @@ class MyClientHandler : public ClientHandler {
     } else {
       s= solver->solve(problem);
       solution = s.c_str();
-      cache_manager->saveSolution(solution, problem);
+      //cache_manager->saveSolution(solution, problem);
     }
     int is_sent = send(client_socket, solution, strlen(solution), 0);
     if (is_sent == -1) {
@@ -66,6 +66,9 @@ class MyClientHandler : public ClientHandler {
       }
     }
   }
+  /**
+   * Destructor.
+   */
   virtual ~MyClientHandler() = default;
 };
 
