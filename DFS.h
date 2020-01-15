@@ -25,12 +25,12 @@ class DFS : public MySearcher<T, Solution> {
     while (!my_stack.empty()) {
       State<T> *current_state = my_stack.top();
       my_stack.pop();
+      this->setNumberOfNodesEvaluated(1);
       if (current_state->Equals(searchable->getGoalState())) {
         cout<<"DFS:"<<endl;
         cout<<"Trial cost: "<< current_state->getTrailCost()<<endl;
         return this->backTrace(current_state, init_state, goal_state);
       }
-      this->setNumberOfNodesEvaluated(1);
       vector<State<T> *> neighbors = searchable->getAllPossibleStates(current_state);
       for (State<T> *neighbor : neighbors) {
         if (!this->isClosedContain(neighbor)) {
