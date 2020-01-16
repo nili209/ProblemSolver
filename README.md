@@ -21,6 +21,15 @@ The server has a limited time of about 2 minutes to wait for the client to send 
 After that time, the program prints a timeout message on the screen, and the customer will need to
 reconnect if he wants to send more issues.  
 
+We implemented the following algorithms for solving search problem in a graph:  
+1. BFS
+2. DFS
+3. A*
+4. Best First Search    
+  
+We conducted an experiment to determine which algorithm is the most efficient base on number of nodes evaluated and the cheapest path, and found out that A* wins.  
+So, when the client will send a search problem, the program will solve the problem using A* algorithm.  
+There is a pdf file presenting the results from the experiment.  
 ### How to run the code: 
 All code files must be placed in the same folder, then you need to open the terminal in the folder location
 and write the following command in the terminal to compile the code:   
