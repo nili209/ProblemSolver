@@ -47,6 +47,7 @@ class MyClientHandler : public ClientHandler {
       solution = s.c_str();
       cache_manager->saveSolution(solution, problem);
     }
+
     string so = solution;
     string file_name = "AStar.txt";
     ofstream file;
