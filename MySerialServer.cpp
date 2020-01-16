@@ -3,7 +3,6 @@
 //
 
 #include "MySerialServer.h"
-#define TIME_OUT 10
 static int socketfd;
 /**
  * The function start the server socket and bind.
@@ -31,7 +30,7 @@ void MySerialServer::start(int port, ClientHandler *client_handler) {
  */
 void MySerialServer::dealWithClients(ClientHandler *client_handler, int socketfd, sockaddr_in &address) {
   while (true) {
-    if (listen(socketfd, 5) == -1) {
+    if (listen(socketfd, 1) == -1) {
       cerr << "Error during listening command" << endl;
       exit(1);
     } else {

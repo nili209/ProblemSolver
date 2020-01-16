@@ -17,7 +17,6 @@
 #include <string>
 #include <cstring>
 #include <mutex>
-#define LINE_SIZE 1024
 #define END_OF_MESSAGE 'e'
 template<typename Problem, typename Solution>
 class MyClientHandler : public ClientHandler {
@@ -46,8 +45,16 @@ class MyClientHandler : public ClientHandler {
     } else {
       s = solver->solve(problem);
       solution = s.c_str();
-      //cache_manager->saveSolution(solution, problem);
+      cache_manager->saveSolution(solution, problem);
     }
+    string so = solution;
+    string file_name = "AStar.txt";
+    ofstream file;
+    file.open(file_name, ios::out | ios::binary | ios::app);
+    unsigned int size = so.size();
+    file.write(so.c_str(), size);
+    file.write("\n", 1);
+    file.close();
     int is_sent = send(client_socket, solution, strlen(solution), 0);
     solution = "";
     if (is_sent == -1) {

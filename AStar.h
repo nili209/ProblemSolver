@@ -23,6 +23,7 @@ class AStar : public MySearcher<T, Solution> {
    * Using the algorithm of AStar.
    */
   Solution search(Searchable<T> *searchable) {
+    int number_of_nodes_evaluated = 0;
     priority_queue<State<T> *, vector<State<T> *>, MyComperator> open_priority_queue;
     State<T> *init_state = searchable->getInitialState();
     State<T> *goal_state = searchable->getGoalState();
@@ -31,11 +32,12 @@ class AStar : public MySearcher<T, Solution> {
     while (!open_priority_queue.empty()) {
       State<T> *current_state = open_priority_queue.top();
       open_priority_queue.pop();
-      this->setNumberOfNodesEvaluated(1);
+      number_of_nodes_evaluated++;
       if (current_state->Equals(goal_state)) {
         cout << "AStar:" << endl;
         cout << "Trial cost: " << current_state->getTrailCost() << endl;
-        return this->backTrace(current_state, init_state, goal_state);
+        cout<<"Number of nodes evaluated: "<< number_of_nodes_evaluated <<endl;
+        return this->backTrace(current_state, init_state, goal_state, number_of_nodes_evaluated);
       }
       closed.push_back(current_state);
       vector<State<T> *> neighbors = searchable->getAllPossibleStates(current_state);
@@ -57,7 +59,6 @@ class AStar : public MySearcher<T, Solution> {
         }
       }
     }
-    this->clearNumberOfNodesEvaluated();
     return NO_PATH;
   }
   /**

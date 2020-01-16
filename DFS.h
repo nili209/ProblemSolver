@@ -16,9 +16,10 @@ class DFS : public MySearcher<T, Solution> {
  public:
   /**
    * Given a Searchable, the function returns the a path from it's initial state to it's goal state.
-   * Using the algorithm of Best First Search.
+   * Using the algorithm of DFS.
    */
   Solution search(Searchable<T> *searchable) {
+    int number_of_nodes_evaluated = 0;
     vector<State<T>*> closed;
     stack<State<T> *> my_stack;
     State<T> *init_state = searchable->getInitialState();
@@ -28,11 +29,12 @@ class DFS : public MySearcher<T, Solution> {
     while (!my_stack.empty()) {
       State<T> *current_state = my_stack.top();
       my_stack.pop();
-      this->setNumberOfNodesEvaluated(1);
+      number_of_nodes_evaluated++;
       if (current_state->Equals(searchable->getGoalState())) {
         cout<<"DFS:"<<endl;
         cout<<"Trial cost: "<< current_state->getTrailCost()<<endl;
-        return this->backTrace(current_state, init_state, goal_state);
+        cout<<"Number of nodes evaluated: "<< number_of_nodes_evaluated <<endl;
+        return this->backTrace(current_state, init_state, goal_state, number_of_nodes_evaluated);
       }
       vector<State<T> *> neighbors = searchable->getAllPossibleStates(current_state);
       for (State<T> *neighbor : neighbors) {
@@ -43,7 +45,6 @@ class DFS : public MySearcher<T, Solution> {
         }
       }
     }
-    this->clearNumberOfNodesEvaluated();
     return NO_PATH;
   }
   /**

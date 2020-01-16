@@ -5,6 +5,7 @@
 #ifndef EX4_CLIENTHANDLER_H
 #define EX4_CLIENTHANDLER_H
 #include <fstream>
+#define LINE_SIZE 1024
 using namespace std;
 class ClientHandler {
 public:

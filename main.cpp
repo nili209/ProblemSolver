@@ -43,8 +43,7 @@ class Main {
     structure.push_back(goal_state4);
     Searchable<Point> *matrix = new Matrix(initial_state1, goal_state4, structure);
     string s = searcher->search(matrix);
-    std::cout << "test1: " << s << endl << "number of nodes = " << searcher->getNumberOfNodesEvaluated()
-              << endl;
+//    std::cout << "test1: " << s << endl << "number of nodes = " << searcher->getNumberOfNodesEvaluated()<< endl;
     //test2
     Searcher<Point, string> *searcher2(new BestFirstSearch<Point, string>);
     initial_point = new Point(0, 0);
@@ -62,8 +61,7 @@ class Main {
     structure2.push_back(goal_state4);
     Searchable<Point> *matrix2 = new Matrix(initial_state1, goal_state4, structure2);
     string s1 = searcher2->search(matrix2);
-    std::cout << "test2: " << s1 << endl << "number of nodes = " << searcher2->getNumberOfNodesEvaluated()
-              << endl;
+ //   std::cout << "test2: " << s1 << endl << "number of nodes = " << searcher2->getNumberOfNodesEvaluated()  << endl;
     //test3
     Searcher<Point, string> *searcher3(new BestFirstSearch<Point, string>);
     initial_point = new Point(0, 0);
@@ -96,8 +94,7 @@ class Main {
     structure3.push_back(goal_state4);
     Searchable<Point> *matrix3 = new Matrix(initial_state1, goal_state4, structure3);
     string s2 = searcher3->search(matrix3);
-    std::cout << "test3: " << s2 << endl << "number of nodes = " << searcher3->getNumberOfNodesEvaluated()
-              << endl;
+ //   std::cout << "test3: " << s2 << endl << "number of nodes = " << searcher3->getNumberOfNodesEvaluated()<< endl;
 //    string problem1 = "1,2;3,4;0,0;1,1;end";
 //    string problem2 = "1,4;7,1;0,10;0;0;2;1";
 //    string problem3 = "1,8,10;9,1000,8;10,0,2;0;0;2;2";
@@ -130,18 +127,18 @@ class Main {
 //    cout << my_cache->getSolution(prob) << endl;
     ///General initialization
     CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
-    server_side::Server *server1 = new MyParallelServer();
-    //server_side::Server *server1 = new MySerialServer();
+    //server_side::Server *server1 = new MyParallelServer();
+    server_side::Server *server1 = new MySerialServer();
     ///string reverser
 //
 //    Solver<string, string> *string_reverser = new StringReverser();
 //    ClientHandler *c_string_reverser = new MyTestClientHandler<string, string>(string_reverser, my_cache3);
 //    server1->open(port, c_string_reverser);
 //    ///BestFS
-    Searcher<Point, string> *searcher_BestFS(new BestFirstSearch<Point, string>);
-    Solver<string, string> *matrix_solver_BestFS = new SearchSolver<Point, string>(searcher_BestFS);
-    ClientHandler *c_BestFS = new MyClientHandler<string, string>(matrix_solver_BestFS, my_cache3);
-    server1->open(port, c_BestFS);
+//    Searcher<Point, string> *searcher_BestFS(new BestFirstSearch<Point, string>);
+//    Solver<string, string> *matrix_solver_BestFS = new SearchSolver<Point, string>(searcher_BestFS);
+//    ClientHandler *c_BestFS = new MyClientHandler<string, string>(matrix_solver_BestFS, my_cache3);
+//    server1->open(port, c_BestFS);
 //    ///BFS
 //    Searcher<Point, string> *searcher_BFS(new BFS<Point, string>);
 //    Solver<string, string> *matrix_solver_BFS = new SearchSolver<Point, string>(searcher_BFS);
@@ -153,10 +150,10 @@ class Main {
 //    ClientHandler *c_DFS = new MyClientHandler<string, string>(matrix_solver_DFS, my_cache3);
 //    server1->open(port, c_DFS);
     ///AStar
-//    Searcher<Point, string> *searcher_AStar(new AStar<Point, string>);
-//    Solver<string, string> *matrix_solver_AStar = new SearchSolver<Point, string>(searcher_AStar);
-//    ClientHandler *c_AStar = new MyClientHandler<string, string>(matrix_solver_AStar, my_cache3);
-//    server1->open(port, c_AStar);
+    Searcher<Point, string> *searcher_AStar(new AStar<Point, string>);
+    Solver<string, string> *matrix_solver_AStar = new SearchSolver<Point, string>(searcher_AStar);
+    ClientHandler *c_AStar = new MyClientHandler<string, string>(matrix_solver_AStar, my_cache3);
+    server1->open(port, c_AStar);
   }
 };
 }

@@ -17,6 +17,7 @@ class BFS : public MySearcher<T, Solution> {
    * Using the algorithm of BFS.
    */
   Solution search(Searchable<T> *searchable) {
+    int number_of_nodes_evaluated = 0;
     queue<State<T> *> my_queue;
     State<T>* init_state = searchable->getInitialState();
     State<T>* goal_state = searchable->getGoalState();
@@ -26,11 +27,12 @@ class BFS : public MySearcher<T, Solution> {
     while(!my_queue.empty()) {
       State<T>* current_state = my_queue.front();
       my_queue.pop();
-      this->setNumberOfNodesEvaluated(1);
+      number_of_nodes_evaluated++;
       if (current_state->Equals(goal_state)) {
         cout<<"BFS:"<<endl;
         cout<<"Trial cost: "<< current_state->getTrailCost()<<endl;
-        return this->backTrace(current_state, init_state, goal_state);
+        cout<<"Number of nodes evaluated: "<< number_of_nodes_evaluated <<endl;
+        return this->backTrace(current_state, init_state, goal_state, number_of_nodes_evaluated);
       }
       vector<State<T>*> neighbors = searchable->getAllPossibleStates(current_state);
       for(State<T>* neighbor : neighbors) {
@@ -41,7 +43,6 @@ class BFS : public MySearcher<T, Solution> {
         }
       }
     }
-    this->clearNumberOfNodesEvaluated();
     return NO_PATH;
   }
   /**
