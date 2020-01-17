@@ -15,10 +15,10 @@ If the solution is already in the cache or the files, we will select it in O(1) 
 Otherwise, we will solve the problem, save it in cache and files, and return it to the client.  
 The program can work in two ways: 
 1. Serial server: The program serially handles clients.  
-2. Parallel servers: The program handles clients in parallel (can handle up to 10 customers at once).   
+2. Parallel servers: The program handles clients in parallel (can handle up to 10 clienrs at once).   
   
 The server has a limited time of about 2 minutes to wait for the client to send the problem.  
-After that time, the program prints a timeout message on the screen, and the customer will need to
+After that time, the program prints a timeout message on the screen, and the client will need to
 reconnect if he wants to send more issues.  
 
 We implemented the following algorithms for solving search problem in a graph:  
@@ -27,11 +27,11 @@ We implemented the following algorithms for solving search problem in a graph:
 3. A*
 4. Best First Search    
   
-We conducted an experiment to determine which algorithm is the most efficient base on number of nodes evaluated and the cheapest path, and found out that A* wins.  
-So, when the client will send a search problem, the program will solve the problem using A* algorithm.  
-There is a pdf file presenting the results from the experiment.  
+We conducted an experiment to determine which is the most efficient algorithm based on number of nodes evaluated and the cheapest path, and found out that A* the best.  
+So, when the client sends a search problem, the program will solve the problem using A* algorithm.  
+There is a pdf file with the results from the experiment.  
 ### How to run the code: 
-All code files must be placed in the same folder, then you need to open the terminal in the folder location
+All code files must be placed in the same folder, then you open the terminal in the folder location
 and write the following command in the terminal to compile the code:   
 _g ++ -std = c ++ 14 * .cpp -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -o a.out -pthread_
 
@@ -40,8 +40,7 @@ Then, to run the code, write:
 Where _port_ is the port number on which the program should open the server.  
 When "server is now listening" is printed, the user has to log in as a client and send problems as explained above.  
 You can run an example of a python script named auto_client.py, which sends a problem from a txt file called matrix_test.txt.
-(Also provided as an example). To run auto_client.py, you must put the auto_client.py and matrix_test.txt files in a folder in the code
-files folder and open the terminal from that folder and type the following line:  
+(Also provided as an example). To run auto_client.py, you must put the auto_client.py and matrix_test.txt files in a folder inside the code files folder and open the terminal from that folder and type the following line:  
 _python3 auto_client.py -vv_
 
 #### Versioning  
