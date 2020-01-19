@@ -47,4 +47,4 @@ _python3 auto_client.py -vv_
 We used [Github](https://github.com/shiraz318/ex4) for version control
 
 #### Authors:   
-Shiraz and Nili
+Shiraz Berger and Nili Cohen
