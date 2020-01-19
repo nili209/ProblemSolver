@@ -6,6 +6,7 @@
 #define EX4_SEARCHSOLVER_H
 #include "Solver.h"
 #include "Searcher.h"
+#include "Matrix.h"
 #define END_OF_LINE ';'
 
 template<typename T, class Solution>

@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <mutex>
 #include "ClientHandler.h"
-#define TIME_OUT 60
+#define TIME_OUT 120
 using namespace std;
 namespace server_side {
 class Server {
