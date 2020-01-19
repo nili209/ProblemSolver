@@ -93,6 +93,9 @@ void MyParallelServer::stop() {
   }
   close(socketfd);
 }
+/**
+ * Destructor.
+ */
 MyParallelServer::~MyParallelServer() {
   delete info;
 }
