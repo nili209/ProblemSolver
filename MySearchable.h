@@ -32,7 +32,7 @@ class MySearchable : public Searchable<T> {
   /**
    * Given a state, the function returns all possible states for the state.
    */
-  virtual vector<State<T>*> getAllPossibleStates(State<T>* s){}
+  virtual vector<State<T>*> getAllPossibleStates(State<T>* s) = 0;
   virtual ~MySearchable() {
     delete initial_state;
     delete goal_state;

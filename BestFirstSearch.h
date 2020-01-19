@@ -37,10 +37,7 @@ class BestFirstSearch : public MySearcher<T, Solution> {
       number_of_nodes_evaluated++;
       //this is the goal state.
       if (current_state->Equals(searchable->getGoalState())) {
-        cout<<"Best First Search:"<<endl;
-        cout<<"Trial cost: "<< current_state->getTrailCost()<<endl;
-        cout<<"Number of nodes evaluated: "<< number_of_nodes_evaluated <<endl;
-        return this->backTrace(current_state, init_state, goal_state, number_of_nodes_evaluated);
+        return this->backTrace(current_state, init_state, goal_state);
       }
       vector<State<T>*> neighbors = searchable->getAllPossibleStates(current_state);
       for(State<T>* neighbor : neighbors) {

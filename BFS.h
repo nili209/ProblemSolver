@@ -29,10 +29,7 @@ class BFS : public MySearcher<T, Solution> {
       my_queue.pop();
       number_of_nodes_evaluated++;
       if (current_state->Equals(goal_state)) {
-        cout<<"BFS:"<<endl;
-        cout<<"Trial cost: "<< current_state->getTrailCost()<<endl;
-        cout<<"Number of nodes evaluated: "<< number_of_nodes_evaluated <<endl;
-        return this->backTrace(current_state, init_state, goal_state, number_of_nodes_evaluated);
+        return this->backTrace(current_state, init_state, goal_state);
       }
       vector<State<T>*> neighbors = searchable->getAllPossibleStates(current_state);
       for(State<T>* neighbor : neighbors) {

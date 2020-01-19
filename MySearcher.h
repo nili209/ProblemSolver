@@ -10,33 +10,20 @@
 template<typename T, typename Solution>
 class MySearcher : public Searcher<T, Solution> {
  private:
- // int number_of_nodes_evaluated = 0;
   Solution solution;
  protected:
-//  /**
-//   * Given a number, the function add the number to number of nodes evaluated.
-//   */
-//  void setNumberOfNodesEvaluated(int num) {
-//    number_of_nodes_evaluated += num;
-//  }
-//  /**
-//   * Reset number os nodes evaluated.
-//   */
-//  void clearNumberOfNodesEvaluated() {
-//    number_of_nodes_evaluated = 0;
-//  }
   /**
  * Given a state, goal state and init state, the function returns the
  * trace of the state from init state to goal state.
  * In this assigment the trace back is a string but in case of a change we
  * need just to change the inner implementation of this function.
  */
-  Solution backTrace(State<T> *state, State<T> *init, State<T> *goal, int number_of_nodes) {
+  Solution backTrace(State<T> *state, State<T> *init, State<T> *goal) {
     string s = "";
     if (state->Equals(init)) {
       s = solution;
       solution = "";
-      return s + " number_of_nodes = " + to_string(number_of_nodes);
+      return s;
     }
     //up, down, right or left.
     string direction = state->getDirection();
@@ -46,7 +33,7 @@ class MySearcher : public Searcher<T, Solution> {
     if (!state->Equals(goal)) {
       solution.insert(direction.length(), ", ");
     }
-    return backTrace(state->getComeFrom(), init, goal, number_of_nodes);
+    return backTrace(state->getComeFrom(), init, goal);
   }
   /**
    * The function checks if a state is in closed.

@@ -23,12 +23,12 @@ void MySerialServer::start(int port, ClientHandler *client_handler) {
     exit(1);
   }
   //while loop accepting and handeling clients serialy.
-  dealWithClients(client_handler, socketfd, address);
+  dealWithClients(client_handler,address);
 }
 /**
  * The function listen and accept a client in a loop until the time is up.
  */
-void MySerialServer::dealWithClients(ClientHandler *client_handler, int socketfd, sockaddr_in &address) {
+void MySerialServer::dealWithClients(ClientHandler *client_handler,sockaddr_in &address) {
   while (true) {
     if (listen(socketfd, 1) == -1) {
       cerr << "Error during listening command" << endl;

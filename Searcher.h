@@ -13,7 +13,6 @@ class Searcher {
 public:
     Searcher<T, Solution>(){}
     virtual Solution search(Searchable<T>* searchable) = 0;
-    //virtual int getNumberOfNodesEvaluated() = 0;
     virtual ~Searcher() = default;
 };
 

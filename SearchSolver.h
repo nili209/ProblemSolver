@@ -11,8 +11,6 @@
 template<typename T, class Solution>
 class SearchSolver : public Solver<string, Solution> {
  private:
-  int number_of_rows = 0;
-  int number_of_cols = 0;
   Searchable<T> *matrix;
   vector<State<T> *> structure;
   Searcher<T, Solution> *my_searcher;
@@ -21,7 +19,6 @@ class SearchSolver : public Solver<string, Solution> {
    * Constructor.
    */
   SearchSolver(Searcher<T, Solution> *searcher) : my_searcher(searcher) {}
-
   /**
    * Given a problem, the function creates a Searchable of type matrix.
    */
@@ -62,7 +59,6 @@ class SearchSolver : public Solver<string, Solution> {
    */
   void readLastValues(string problem, int i) {
     char current_char = problem[i];
-    int counter_of_last_values = 0;
     string row_in = "", col_in = "", row_out = "", col_out = "";
     while (current_char != ',') {
       row_in += current_char;

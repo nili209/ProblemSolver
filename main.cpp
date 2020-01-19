@@ -127,8 +127,8 @@ class Main {
 //    cout << my_cache->getSolution(prob) << endl;
     ///General initialization
     CacheManager<string, string> *my_cache3 = new FileCacheManager<string>(-1);
-    //server_side::Server *server1 = new MyParallelServer();
-    server_side::Server *server1 = new MySerialServer();
+    server_side::Server *server1 = new MyParallelServer();
+    //server_side::Server *server1 = new MySerialServer();
     ///string reverser
 //
 //    Solver<string, string> *string_reverser = new StringReverser();
@@ -154,13 +154,13 @@ class Main {
     Solver<string, string> *matrix_solver_AStar = new SearchSolver<Point, string>(searcher_AStar);
     ClientHandler *c_AStar = new MyClientHandler<string, string>(matrix_solver_AStar, my_cache3);
     server1->open(port, c_AStar);
+    return 0;
   }
 };
 }
 
 int main(int argc, char *argv[]) {
   boot::Main main;
-  cout << atoi(argv[1]) << endl;
   main.main(atoi(argv[1]));
-  return 0;
+  return argc;
 }

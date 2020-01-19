@@ -10,5 +10,6 @@ using namespace std;
 class ClientHandler {
 public:
     virtual void handleClient(int client_socket_in) = 0;
+    virtual ~ClientHandler() = default;
 };
 #endif //EX4_CLIENTHANDLER_H

@@ -17,7 +17,7 @@ class MySerialServer : public Server {
   virtual void open(int port, ClientHandler *client_handler);
   virtual void stop();
   static void start(int port, ClientHandler *client_handler);
-  static void dealWithClients(ClientHandler *client_handler, int socketfd, sockaddr_in &address);
+  static void dealWithClients(ClientHandler *client_handler,sockaddr_in &address);
   virtual ~MySerialServer() = default;
 };
 

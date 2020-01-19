@@ -5,13 +5,15 @@
 #include <netinet/in.h>
 #include <iostream>
 #include <stack>
-//#define TIME_OUT 100
+#include <thread>
+#include <chrono>
 #include "MyParallelServer.h"
 mutex mutex_lock;
 struct threadData {
   int socket;
   ClientHandler *client_handler_thread;
 };
+static int socketfd;
 /**
  * The function activate the next thread to handle it's client.
  */
@@ -20,7 +22,13 @@ void *startThreadClient(void *param) {
   data->client_handler_thread->handleClient(data->socket);
   delete data;
 }
-static int socketfd;
+
+void MyParallelServer::CountTwoMinets() {
+  std::this_thread::sleep_for(std::chrono::minutes(2));
+  cout << "time_out" << endl;
+  close(socketfd);
+  exit(0);
+}
 /**
  * The function opens the server socket and bind and listen.
  */
@@ -44,24 +52,24 @@ void MyParallelServer::open(int port, ClientHandler *client_handler) {
   } else {
     cout << "Server is now listening..." << endl;
   }
-  start(socketfd, client_handler, address);
+  start(client_handler, address);
 }
 /**
  * The function listen and accept multiple clients in a loop until the time is up.
  */
-void MyParallelServer::start(int socketfd, ClientHandler *client_handler, sockaddr_in address) {
+void MyParallelServer::start(ClientHandler *client_handler, sockaddr_in address) {
   while (true) {
     struct timeval tv;
+    thread t1(CountTwoMinets);
+    t1.detach();
     int client_socket_in = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
     fd_set rfds;
     tv.tv_usec = 0.0;
     FD_ZERO(&rfds);
     FD_SET(client_socket_in, &rfds);
-    int recVal = 0;
     tv.tv_sec = TIME_OUT;
     setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char *) &tv, sizeof tv);
     //checks timeout
-    recVal = select(client_socket_in + 1, &rfds, NULL, NULL, &tv);
     if (client_socket_in < 0) {
       if (errno == EWOULDBLOCK || errno == EAGAIN) {
         cout << "time_out" << endl;
@@ -73,6 +81,7 @@ void MyParallelServer::start(int socketfd, ClientHandler *client_handler, sockad
     }
     setsockopt(client_socket_in, SOL_SOCKET, SO_RCVTIMEO, (const char *) &tv, sizeof tv);
     auto data = new threadData;
+    cout<<"Client accepted"<<endl;
     data->socket = client_socket_in;
     data->client_handler_thread = client_handler;
     pthread_t trid;
