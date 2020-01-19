@@ -22,13 +22,6 @@ void *startThreadClient(void *param) {
   data->client_handler_thread->handleClient(data->socket);
   delete data;
 }
-
-void MyParallelServer::CountTwoMinets() {
-  std::this_thread::sleep_for(std::chrono::minutes(2));
-  cout << "time_out" << endl;
-  close(socketfd);
-  exit(0);
-}
 /**
  * The function opens the server socket and bind and listen.
  */
@@ -60,8 +53,6 @@ void MyParallelServer::open(int port, ClientHandler *client_handler) {
 void MyParallelServer::start(ClientHandler *client_handler, sockaddr_in address) {
   while (true) {
     struct timeval tv;
-    thread t1(CountTwoMinets);
-    t1.detach();
     int client_socket_in = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &address);
     fd_set rfds;
     tv.tv_usec = 0.0;
