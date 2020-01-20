@@ -8,7 +8,7 @@
 #include "MySerialServer.h"
 #include "MyParallelServer.h"
 #include "AStar.h"
-#define PORT 5400
+#define PORT 5600
 using namespace std;
 
 namespace boot {
