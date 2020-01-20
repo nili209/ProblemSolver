@@ -27,7 +27,7 @@ class SearchSolver : public Solver<string, Solution> {
     int i = 0;
     int number_of_rows = 0;
     int number_of_cols = 0;
-    Searchable<T>* m;
+    Searchable<T> *m = nullptr;
     matrix = m;
     vector<State<T> *> v;
     structure = v;

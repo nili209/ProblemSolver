@@ -21,6 +21,7 @@ void *startThreadClient(void *param) {
   auto data = (threadData *) param;
   data->client_handler_thread->handleClient(data->socket);
   delete data;
+  return reinterpret_cast<void *>(1);
 }
 /**
  * The function opens the server socket and bind and listen.

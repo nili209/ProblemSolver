@@ -8,7 +8,7 @@
 #include "MySerialServer.h"
 #include "MyParallelServer.h"
 #include "AStar.h"
-
+#define PORT 5400
 using namespace std;
 
 namespace boot {
@@ -30,6 +30,12 @@ class Main {
 
 int main(int argc, char *argv[]) {
   boot::Main main;
-  main.main(atoi(argv[1]));
+  int port;
+  if(argc > 1) {
+    port = atoi(argv[1]);
+  } else {
+    port = PORT;
+  }
+  main.main(port);
   return 0;
 }
