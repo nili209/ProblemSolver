@@ -20,7 +20,6 @@ class MyParallelServer : public Server {
   virtual void open(int port, ClientHandler *client_handler);
   virtual void stop();
   void start(ClientHandler *client_handler, sockaddr_in address);
-  void static CountTwoMinets();
   virtual ~MyParallelServer();
 };
 

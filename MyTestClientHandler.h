@@ -47,6 +47,7 @@ class MyTestClientHandler : public ClientHandler {
     //check if the problem already solved
     if (cache_manager->isSolved(problem)) {
       solution = cache_manager->getSolution(problem);
+      //the problem is not solved
     } else {
       const char *p = problem.c_str();
       solution = solver->solve(p);

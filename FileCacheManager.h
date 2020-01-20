@@ -150,11 +150,13 @@ class FileCacheManager : public CacheManager<string, Solution> {
    */
   bool isSolved(string problem) {
     auto item = problem_map.find(problem);
+    //check if the problem is in the problem map - we solved it in the current run.
     if (item == problem_map.end()) {
       hash < string > hasher;
       auto problem_hashed = hasher(problem);
       string problem_name = PROBLEM + to_string(problem_hashed) + ".txt";
       ifstream ifstream1(problem_name);
+      //if a file with the problem name exists - it means that the the problem is allready solved.
       if (ifstream1) {
         return true;
       }

@@ -19,6 +19,20 @@ class BestFirstSearch : public MySearcher<T, Solution> {
   };
  public:
   /**
+* Default Constructor.
+*/
+  BestFirstSearch(){};
+  /**
+* Constructor.
+*/
+  BestFirstSearch(const BestFirstSearch& a) {}
+  /**
+* Copy Constructor.
+*/
+  BestFirstSearch* copy() {
+    return new BestFirstSearch(*this);
+  }
+  /**
    * Given a Searchable, the function returns the cheapest path from it's initial state to it's goal state.
    * Using the algorithm of Best First Search.
    */
@@ -28,12 +42,11 @@ class BestFirstSearch : public MySearcher<T, Solution> {
     State<T>* init_state = searchable->getInitialState();
     State<T>* goal_state = searchable->getGoalState();
     open_priority_queue.push(init_state);
-    vector<State<T>*> closed;
     while (!open_priority_queue.empty()) {
       //pop the lowest trial cost state from open queue.
       State<T>* current_state = open_priority_queue.top();
       open_priority_queue.pop();
-      closed.push_back(current_state);
+      this->addToClosed(current_state);//closed.push_back(current_state);
       number_of_nodes_evaluated++;
       //this is the goal state.
       if (current_state->Equals(searchable->getGoalState())) {
@@ -42,7 +55,7 @@ class BestFirstSearch : public MySearcher<T, Solution> {
       vector<State<T>*> neighbors = searchable->getAllPossibleStates(current_state);
       for(State<T>* neighbor : neighbors) {
         //we did not reached to this state until now or we already done evaluating it.
-        if (!this->isClosedContain(neighbor, closed) && !isOpenContain(neighbor, open_priority_queue)) {
+        if (!this->isClosedContain(neighbor) && !isOpenContain(neighbor, open_priority_queue)) {
           neighbor->setComeFrom(current_state);
           open_priority_queue.push(neighbor);
         } else {

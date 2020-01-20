@@ -8,7 +8,6 @@
 #include <thread>
 #include <chrono>
 #include "MyParallelServer.h"
-mutex mutex_lock;
 struct threadData {
   int socket;
   ClientHandler *client_handler_thread;
@@ -75,7 +74,7 @@ void MyParallelServer::start(ClientHandler *client_handler, sockaddr_in address)
     auto data = new threadData;
     cout<<"Client accepted"<<endl;
     data->socket = client_socket_in;
-    data->client_handler_thread = client_handler;
+    data->client_handler_thread = client_handler->copy();
     pthread_t trid;
     if (pthread_create(&trid, nullptr, startThreadClient, data) > 0) {
       cerr << "Error creating thread" << endl;

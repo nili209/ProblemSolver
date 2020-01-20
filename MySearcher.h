@@ -12,6 +12,7 @@ class MySearcher : public Searcher<T, Solution> {
  private:
   Solution solution;
  protected:
+  vector<State<T>*> closed;
   /**
  * Given a state, goal state and init state, the function returns the
  * trace of the state from init state to goal state.
@@ -38,7 +39,7 @@ class MySearcher : public Searcher<T, Solution> {
   /**
    * The function checks if a state is in closed.
    */
-  bool isClosedContain(State<T> *s, vector<State<T>*> closed) {
+  bool isClosedContain(State<T> *s) {
     for (State<T>* n : closed) {
       if (s->Equals(n)) {
         return true;
@@ -46,8 +47,30 @@ class MySearcher : public Searcher<T, Solution> {
     }
     return false;
   }
+  /**
+ * The function add a given state to closed.
+ */
+  void addToClosed(State<T>* s) {
+    closed.push_back(s);
+  }
  public:
-  virtual Solution search(Searchable<T> *searchable) = 0;
+  /**
+ * Default Constructor.
+ */
+  MySearcher<T, Solution>() {};
+  /**
+* Constructor.
+*/
+  MySearcher(const MySearcher &c) {
+    solution = c.solution;
+  }
+  /**
+* Copy Constructor.
+*/
+  MySearcher *copy() {
+    return new MySearcher(*this);
+  }
+  virtual Solution search(Searchable<T> *searchable) {};
   /**
    * Destructor.
    */

@@ -15,28 +15,42 @@ template<typename T, typename Solution>
 class DFS : public MySearcher<T, Solution> {
  public:
   /**
+* Default Constructor.
+*/
+  DFS(){};
+  /**
+* Constructor.
+*/
+  DFS(const DFS& a) {}
+  /**
+* Copy Constructor.
+*/
+  DFS* copy() {
+    return new DFS(*this);
+  }
+  /**
    * Given a Searchable, the function returns the a path from it's initial state to it's goal state.
    * Using the algorithm of DFS.
    */
   Solution search(Searchable<T> *searchable) {
     int number_of_nodes_evaluated = 0;
-    vector<State<T>*> closed;
     stack<State<T> *> my_stack;
     State<T> *init_state = searchable->getInitialState();
     State<T> *goal_state = searchable->getGoalState();
     my_stack.push(init_state);
-    closed.push_back(init_state);
+    this->addToClosed(init_state);
     while (!my_stack.empty()) {
       State<T> *current_state = my_stack.top();
       my_stack.pop();
       number_of_nodes_evaluated++;
+      //we reached the end - found the goal state.
       if (current_state->Equals(searchable->getGoalState())) {
         return this->backTrace(current_state, init_state, goal_state);
       }
       vector<State<T> *> neighbors = searchable->getAllPossibleStates(current_state);
       for (State<T> *neighbor : neighbors) {
-        if (!this->isClosedContain(neighbor, closed)) {
-          closed.push_back(neighbor);
+        if (!this->isClosedContain(neighbor)) {
+          this->addToClosed(neighbor);//closed.push_back(neighbor);
           neighbor->setComeFrom(current_state);
           my_stack.push(neighbor);
         }

@@ -7,14 +7,16 @@
 #include "State.h"
 #include <vector>
 using namespace std;
-template <typename T>
+template<typename T>
 class Searchable {
-public:
-    virtual State<T>* getInitialState() = 0;
-    virtual State<T>* getGoalState() = 0;
-    virtual vector<State<T>*> getAllPossibleStates(State<T>* s) = 0;
-    virtual ~Searchable() = default;
+ public:
+  Searchable(const Searchable &c);
+  Searchable() {};
+  virtual Searchable *copy() = 0;
+  virtual State<T> *getInitialState() = 0;
+  virtual State<T> *getGoalState() = 0;
+  virtual vector<State<T> *> getAllPossibleStates(State<T> *s) = 0;
+  virtual ~Searchable() = default;
 };
-
 
 #endif //EX4_SEARCHABLE_H

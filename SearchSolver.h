@@ -21,6 +21,24 @@ class SearchSolver : public Solver<string, Solution> {
    */
   SearchSolver(Searcher<T, Solution> *searcher) : my_searcher(searcher) {}
   /**
+ * Constructor.
+ */
+  SearchSolver(const SearchSolver &c) {
+    matrix = c.matrix;
+    structure = c.structure;
+    my_searcher = c.my_searcher->copy();
+  }
+  /**
+* Default Constructor.
+*/
+  SearchSolver() {};
+  /**
+* Copy Constructor.
+*/
+  SearchSolver *copy() {
+    return new SearchSolver(*this);
+  }
+  /**
    * Given a problem, the function creates a Searchable of type matrix.
    */
   void initMatrix(string problem) {
@@ -37,6 +55,7 @@ class SearchSolver : public Solver<string, Solution> {
     //read from buffer until we get to the two last rows that contains the start and end point.
     while (number_of_rows < number_of_lines - 2) {
       while (current_char != END_OF_LINE) {
+        //the data is seperated by ,
         if (current_char == ',') {
           createState(stoi(data), true, number_of_rows, number_of_cols);
           data = "";
@@ -87,6 +106,7 @@ class SearchSolver : public Solver<string, Solution> {
    */
   double getCost(int row, int col) {
     int x, y;
+    //find the matching state with x = row, y = col and return it's cost.
     for (State<Point> *state : structure) {
       x = state->getState().getX();
       y = state->getState().getY();
@@ -122,6 +142,7 @@ class SearchSolver : public Solver<string, Solution> {
    */
   int initNumberOfLines(string problem) {
     int i, length = problem.length(), number_of_lines = 0;
+    //each line seperated by ;
     for (i = 0; i < length; i++) {
       if (problem[i] == END_OF_LINE) {
         number_of_lines++;

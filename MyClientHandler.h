@@ -28,7 +28,21 @@ class MyClientHandler : public ClientHandler {
    * Constructor.
    */
   MyClientHandler(Solver<Problem, string> *solver1, CacheManager<Problem, Solution> *cache_menager1) :
-  solver(solver1), cache_manager(cache_menager1) {}
+  solver(solver1), cache_manager(cache_menager1) {};
+  /**
+* Constructor.
+*/
+  MyClientHandler(const MyClientHandler& c) {
+    solver = c.solver->copy();
+    cache_manager = c.cache_manager;
+  }
+  /**
+* Copy Constructor.
+*/
+  MyClientHandler* copy() {
+    return new MyClientHandler(*this);
+  }
+  MyClientHandler(){}
   /**
    * Given a socket of client, the function reads data from the client and sends to the client the solution.
    */
@@ -41,6 +55,7 @@ class MyClientHandler : public ClientHandler {
     if (cache_manager->isSolved(problem)) {
       s = cache_manager->getSolution(problem);
       solution = s.c_str();
+      //the problem is not solved.
     } else {
       s = solver->solve(problem);
       solution = s.c_str();
