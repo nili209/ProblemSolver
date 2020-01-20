@@ -10,9 +10,6 @@ using namespace std;
 template<typename T>
 class Searchable {
  public:
-  Searchable(const Searchable &c);
-  Searchable() {};
-  virtual Searchable *copy() = 0;
   virtual State<T> *getInitialState() = 0;
   virtual State<T> *getGoalState() = 0;
   virtual vector<State<T> *> getAllPossibleStates(State<T> *s) = 0;

@@ -8,12 +8,8 @@
 #include "Searchable.h"
 template<typename T, class Solution>
 class Searcher {
- protected:
-  mutex mutex_lock;
  public:
   Searcher<T, Solution>() {}
-  Searcher(const Searcher &c);
-  virtual Searcher *copy() = 0;
   virtual Solution search(Searchable<T> *searchable) = 0;
   virtual ~Searcher() = default;
 };

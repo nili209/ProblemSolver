@@ -21,24 +21,6 @@ class SearchSolver : public Solver<string, Solution> {
    */
   SearchSolver(Searcher<T, Solution> *searcher) : my_searcher(searcher) {}
   /**
- * Constructor.
- */
-  SearchSolver(const SearchSolver &c) {
-    matrix = c.matrix;
-    structure = c.structure;
-    my_searcher = c.my_searcher->copy();
-  }
-  /**
-* Default Constructor.
-*/
-  SearchSolver() {};
-  /**
-* Copy Constructor.
-*/
-  SearchSolver *copy() {
-    return new SearchSolver(*this);
-  }
-  /**
    * Given a problem, the function creates a Searchable of type matrix.
    */
   void initMatrix(string problem) {

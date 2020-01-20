@@ -1,8 +1,6 @@
 //
 // Created by nili and shiraz on 9.1.2020.
 //
-
-
 #include "Matrix.h"
 /**
  * Constructor.

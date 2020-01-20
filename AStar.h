@@ -19,25 +19,16 @@ class AStar : public MySearcher<T, Solution> {
   };
  public:
   /**
-* Default Constructor.
-*/
+   * Constructor.
+   */
   AStar(){};
-  /**
-* Constructor.
-*/
-  AStar(const AStar& a) {}
-  /**
-* Copy Constructor.
-*/
-  AStar* copy() {
-    return new AStar(*this);
-  }
   /**
    * Given a Searchable, the function returns a path from it's initial state to it's goal state.
    * Using the algorithm of AStar.
    */
   Solution search(Searchable<T> *searchable) {
     int number_of_nodes_evaluated = 0;
+    vector<State<T>*> closed;
     priority_queue<State<T> *, vector<State<T> *>, MyComperator> open_priority_queue;
     State<T> *init_state = searchable->getInitialState();
     State<T> *goal_state = searchable->getGoalState();
@@ -50,17 +41,17 @@ class AStar : public MySearcher<T, Solution> {
       if (current_state->Equals(goal_state)) {
         return this->backTrace(current_state, init_state, goal_state);
       }
-      this->addToClosed(current_state);
+      closed.push_back(current_state);
       vector<State<T> *> neighbors = searchable->getAllPossibleStates(current_state);
       for (State<T> *neighbor : neighbors) {
         double possible_trail_cost = neighbor->getCost() + current_state->getTrailCost();
-        if (!isOpenContain(neighbor, open_priority_queue) && !this->isClosedContain(neighbor)) {
+        if (!isOpenContain(neighbor, open_priority_queue) && !this->isClosedContain(neighbor, closed)) {
           neighbor->setComeFrom(current_state);
           neighbor->setTrailCost(possible_trail_cost);
           setHeuristic(neighbor, goal_state);
           open_priority_queue.push(neighbor);
           continue;
-        } else if (this->isClosedContain(neighbor)) {
+        } else if (this->isClosedContain(neighbor, closed)) {
           continue;
         } else if (possible_trail_cost < neighbor->getTrailCost()) {
           neighbor->setComeFrom(current_state);

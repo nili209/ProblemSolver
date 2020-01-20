@@ -13,30 +13,17 @@ template<typename T, typename Solution>
 class BFS : public MySearcher<T, Solution> {
  public:
   /**
-* Default Constructor.
-*/
-  BFS(){};
-  /**
-* Constructor.
-*/
-  BFS(const BFS& a) {}
-  /**
-* Copy Constructor.
-*/
-  BFS* copy() {
-    return new BFS(*this);
-  }
-  /**
    * Given a Searchable, the function returns the shortest path from it's initial state to it's goal state.
    * Using the algorithm of BFS.
    */
   Solution search(Searchable<T> *searchable) {
     int number_of_nodes_evaluated = 0;
     queue<State<T> *> my_queue;
+    vector<State<T>*> closed;
     State<T>* init_state = searchable->getInitialState();
     State<T>* goal_state = searchable->getGoalState();
     my_queue.push(init_state);
-    this->addToClosed(init_state);
+    closed.push_back(init_state);
     while(!my_queue.empty()) {
       State<T>* current_state = my_queue.front();
       my_queue.pop();
@@ -47,8 +34,8 @@ class BFS : public MySearcher<T, Solution> {
       }
       vector<State<T>*> neighbors = searchable->getAllPossibleStates(current_state);
       for(State<T>* neighbor : neighbors) {
-        if (!this->isClosedContain(neighbor)) {
-          this->addToClosed(neighbor);//closed.push_back(neighbor);
+        if (!this->isClosedContain(neighbor, closed)) {
+          closed.push_back(neighbor);
           neighbor->setComeFrom(current_state);
           my_queue.push(neighbor);
         }
