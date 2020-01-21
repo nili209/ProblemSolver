@@ -8,6 +8,9 @@
 #include "MySerialServer.h"
 #include "MyParallelServer.h"
 #include "AStar.h"
+#include "BestFirstSearch.h"
+#include "BFS.h"
+#include "DFS.h"
 #define PORT 5600
 using namespace std;
 

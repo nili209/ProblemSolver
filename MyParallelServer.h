@@ -19,7 +19,7 @@ class MyParallelServer : public Server {
   MyParallelServer(){}
   virtual void open(int port, ClientHandler *client_handler);
   virtual void stop();
-  void start(ClientHandler *client_handler, sockaddr_in address);
+  void start(int* sock, socklen_t * client_length, ClientHandler *client_handler);
   virtual ~MyParallelServer();
 };
 

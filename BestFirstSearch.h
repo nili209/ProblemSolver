@@ -19,6 +19,10 @@ class BestFirstSearch : public MySearcher<T, Solution> {
   };
  public:
   /**
+ * Constructor.
+ */
+  BestFirstSearch(){};
+  /**
    * Given a Searchable, the function returns the cheapest path from it's initial state to it's goal state.
    * Using the algorithm of Best First Search.
    */
